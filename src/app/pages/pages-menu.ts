@@ -19,7 +19,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Gestión',
     icon: 'pie-chart-outline',
-    link: '/pages/iot-dashboard',
+    link: '/pages/gestion',
     // children: [
     //   {
     //     title: 'Stepper',
@@ -50,34 +50,34 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Programa Articulado Nutricional',
-        link: '/pages/forms/inputs',
+        link: '/pages/ppr/programa-articulado-nutricional',
       },
       {
         title: 'Salud Materno Neonatal',
-        link: '/pages/forms/layouts',
+        link: '/pages/ppr/salud-materno-neonatal',
       },
       {
         title: 'TBC - VIH/SIDA',
-        link: '/pages/forms/buttons',
+        link: '/pages/ppr/tbc',
       },
       {
         title: 'Enfermedades No Transmisibles',
-        link: '/pages/forms/datepicker',
+        link: '/pages/ppr/enfermedades-no-transmisibles',
       },
       {
         title: 'Prevención y Control del Cancer',
-        link: '/pages/forms/datepicker',
+        link: '/pages/ppr/prevencion-control-cancer',
       },
       {
         title: 'Salud Mental',
-        link: '/pages/forms/datepicker',
+        link: '/pages/ppr/salud-mental',
       },
     ],
   },
   {
     title: 'FED',
     icon: 'book-outline',
-    link: '/pages/ui-features',
+    link: '/pages/fed',
     // children: [
     //   {
     //     title: 'Grid',
@@ -100,7 +100,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Financiero',
     icon: 'layers-outline',
-    link: '/pages/modal-overlays/dialog',
+    link: '/pages/financiero',
     // children: [
     //   {
     //     title: 'Dialog',
@@ -127,7 +127,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Campaña de Salud',
     icon: 'activity-outline',
-    link: '/pages/extra-components/calendar',
+    link: '/pages/campana-salud',
     // children: [
     //   {
     //     title: 'Calendar',
@@ -158,7 +158,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Produccion',
     icon: 'npm-outline',
-    link: '/pages/maps/gmaps',
+    link: '/pages/produccion',
     // children: [
     //   {
     //     title: 'Google Maps',
@@ -181,7 +181,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'VPH',
     icon: 'bookmark-outline',
-    link: '/pages/charts/echarts',
+    link: '/pages/vph',
     // children: [
     //   {
     //     title: 'Echarts',
@@ -200,7 +200,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Recursos Humanos',
     icon: 'people-outline',
-    link: '/pages/editors/tinymce',
+    link: '/pages/recursos-humanos',
     // children: [
     //   {
     //     title: 'TinyMCE',
@@ -217,9 +217,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     group: true,
   },
   {
-    title: 'Tables & Data',
+    title: 'Gestión',
     icon: 'grid-outline',
-    children: [
+    link: '/pages/tables/smart-table',
+    /*children: [
       {
         title: 'Smart Table',
         link: '/pages/tables/smart-table',
@@ -228,27 +229,28 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Tree Grid',
         link: '/pages/tables/tree-grid',
       },
-    ],
+    ],*/
   },
   {
-    title: 'Miscellaneous',
+    title: 'OpenData PPR',
     icon: 'shuffle-2-outline',
-    children: [
+    link: '/pages/miscellaneous/404',
+    /*children: [
       {
         title: '404',
         link: '/pages/miscellaneous/404',
       },
-    ],
+    ],*/
   },
   {
-    title: 'Auth',
+    title: 'Campaña',
     icon: 'lock-outline',
     children: [
       {
-        title: 'Login',
+        title: 'Campaña Vacunometro',
         link: '/auth/login',
       },
-      {
+/*      {
         title: 'Register',
         link: '/auth/register',
       },
@@ -259,7 +261,37 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Reset Password',
         link: '/auth/reset-password',
-      },
+      },*/
     ],
+  },
+  {
+    title: 'Produccion',
+    icon: 'people-outline',
+    link: '/pages/editors/tinymce',
+    // children: [
+    //   {
+    //     title: 'TinyMCE',
+    //     link: '/pages/editors/tinymce',
+    //   },
+    //   {
+    //     title: 'CKEditor',
+    //     link: '/pages/editors/ckeditor',
+    //   },
+    // ],
+  },
+  {
+    title: 'Convenio FED',
+    icon: 'people-outline',
+    link: '/pages/editors/tinymce',
+    // children: [
+    //   {
+    //     title: 'TinyMCE',
+    //     link: '/pages/editors/tinymce',
+    //   },
+    //   {
+    //     title: 'CKEditor',
+    //     link: '/pages/editors/ckeditor',
+    //   },
+    // ],
   },
 ];

@@ -5,6 +5,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
 import { NbMenuModule } from '@nebular/theme';
 import { ThemeModule } from '../@theme/theme.module';
+import { GestionModule } from './reportes/gestion/gestion.module';
 
 
 @NgModule({
@@ -16,8 +17,8 @@ import { ThemeModule } from '../@theme/theme.module';
     CommonModule,
     PagesRoutingModule,
     NbMenuModule,
-    ThemeModule,
-
+    GestionModule,
+    ThemeModule
   ]
 })
 export class PagesModule { }

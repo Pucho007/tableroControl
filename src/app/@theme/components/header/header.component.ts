@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
               private menuService: NbMenuService,
               private themeService: NbThemeService,
               // private userService: UserData,
-              // private layoutService: LayoutService,
+              //private layoutService: LayoutService,
               private breakpointService: NbMediaBreakpointsService) {
   }
 
@@ -80,7 +80,7 @@ export class HeaderComponent implements OnInit {
 
   toggleSidebar(): boolean {
     this.sidebarService.toggle(true, 'menu-sidebar');
-    // this.layoutService.changeLayoutSize();
+    //this.layoutService.changeLayoutSize();
 
     return false;
   }

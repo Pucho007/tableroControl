@@ -12,11 +12,14 @@ import {
   NbMenuModule,
   NbSidebarModule,
   NbToastrModule,
-  NbWindowModule, NbLayoutModule,
+  NbWindowModule, 
+  NbLayoutModule,
 } from '@nebular/theme';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -36,7 +39,8 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     BrowserAnimationsModule,
     NbThemeModule.forRoot({ name: 'default' }),
     NbLayoutModule,
-    NbEvaIconsModule
+    NbEvaIconsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

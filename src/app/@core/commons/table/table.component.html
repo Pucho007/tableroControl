@@ -1,0 +1,45 @@
+<h1>TABLA</h1>
+<div class="table-responsive">
+    <table id="tabla-his" class="table table-bordered table-hover" style="font-size: 10px;">
+        <thead>
+          <tr style="text-align: center;">
+            <ng-container *ngFor="let header of dataTable.headers; let i=index">
+                <ng-container *ngIf="i==0; else dataCol" >
+                    <th scope="col">
+                      {{header}}
+                    </th>
+                </ng-container>
+                <ng-template #dataCol>
+                    <th scope="col" colspan="3">
+                        {{header}}
+                      </th>
+                </ng-template> 
+            </ng-container>
+            
+              
+          </tr>
+          <tr style="text-align: center;">
+            <th scope="col" *ngFor="let subheader of dataTable.subheaders">
+                {{subheader}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let data of dataTable.data">
+                <tr style="cursor: pointer;" (click)="selectedRowHospital(data)">
+                    <ng-container *ngFor="let item of $any(data) | keyvalue: originalOrder; let i = index ">
+                        <ng-container *ngIf="!dataTable?.indexDisable?.includes(i)">
+                            <ng-container *ngIf="dataTable.rowBold==i; else data">
+                                <th scope="row">{{item.value}}</th>
+                            </ng-container>
+                            <ng-template #data>
+                                <td style="text-align: center;">{{item.value}}</td>
+                            </ng-template>
+                        </ng-container>
+                    </ng-container>
+                </tr>
+            </ng-container>
+
+        </tbody>
+    </table>
+</div>
