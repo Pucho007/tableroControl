@@ -24,4 +24,23 @@ nb-card-body {
   .demo-items {
     flex: 1 0 33%;
   }
+
+  .filtro-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .filtro-container .filtro-indicador{
+    margin-right: 1rem;
+  }
+
   
+  .filtro-container .filtro-indicador span{
+    margin-right: .5rem;
+  }
+
+  :host nb-tab {
+    padding: 1.25rem 0 0 0 ;
+  }

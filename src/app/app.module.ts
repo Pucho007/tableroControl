@@ -19,7 +19,9 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
@@ -40,9 +42,12 @@ import { HttpClientModule } from '@angular/common/http';
     NbThemeModule.forRoot({ name: 'default' }),
     NbLayoutModule,
     NbEvaIconsModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
-  providers: [],
+  providers: [
+    {provide:HTTP_INTERCEPTORS, useClass:SpinnerInterceptor, multi:true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

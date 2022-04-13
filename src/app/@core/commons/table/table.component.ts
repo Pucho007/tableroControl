@@ -1,5 +1,6 @@
 import { KeyValue } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IDataTableActionComponent } from '../../models/IDatatable.interface';
 
 @Component({
   selector: 'app-table',
@@ -8,7 +9,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class TableComponent implements OnInit {
 
-  @Input() dataTable:any;
+  @Input() dataTable!:IDataTableActionComponent;
   @Output() actionShowHospital:EventEmitter<any> = new EventEmitter();
 
   rowSelected!:boolean;

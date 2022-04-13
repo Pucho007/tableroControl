@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GestionComponent } from './gestion.component';
-import { NbCardModule, NbSelectModule } from '@nebular/theme';
+import { NbCardModule, NbSelectModule, NbButtonModule, NbIconModule, NbTabsetModule } from '@nebular/theme';
 import { CommonsModule } from '../../../@core/commons/commons.module';
 
 
@@ -14,7 +14,10 @@ import { CommonsModule } from '../../../@core/commons/commons.module';
     CommonModule,
     NbSelectModule,
     NbCardModule,
-    CommonsModule
+    CommonsModule,
+    NbButtonModule,
+    NbIconModule,
+    NbTabsetModule
   ]
 })
 export class GestionModule { }

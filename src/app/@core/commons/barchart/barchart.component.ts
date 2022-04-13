@@ -6,21 +6,25 @@ import { NbColorHelper, NbThemeService } from '@nebular/theme';
   templateUrl: './barchart.component.html',
   styleUrls: ['./barchart.component.scss']
 })
-export class BarchartComponent implements OnDestroy {
+export class BarchartComponent implements OnDestroy, OnInit {
   
   @Input("areaChartData") areaChartData:any;
+  @Input("areaChartOptions") areaChartOptions:any;
 
   data: any;
   options: any;
   themeSubscription: any;
+  myChart:any;
 
   constructor(private theme: NbThemeService) {
-    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
+  }
+  ngOnInit(): void {
+    //this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
 
-      const colors: any = config.variables;
-      const chartjs: any = config.variables!.chartjs;
+      //const colors: any = config.variables;
+      //const chartjs: any = config.variables!.chartjs;
 
-      this.data = {
+      /*this.data = {
         labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
         datasets: [{
           data: [65, 59, 80, 81, 56, 55, 40],
@@ -31,9 +35,14 @@ export class BarchartComponent implements OnDestroy {
           label: 'Series B',
           backgroundColor: NbColorHelper.hexToRgbA(colors.infoLight, 0.8),
         }],
-      };
+      };*/
 
-      this.options = {
+      console.log("opened")
+
+      this.data=this.areaChartData;
+
+      this.options=this.areaChartOptions
+      /*this.options = {
         maintainAspectRatio: false,
         responsive: true,
         legend: {
@@ -65,12 +74,13 @@ export class BarchartComponent implements OnDestroy {
             },
           ],
         },
-      };
-    });
+      };*/
+    //});
   }
 
   ngOnDestroy(): void {
-    this.themeSubscription.unsubscribe();
+    //this.themeSubscription.unsubscribe();
+    console.log("destruido");
   }
 
 }

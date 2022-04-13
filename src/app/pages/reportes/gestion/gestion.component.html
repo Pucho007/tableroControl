@@ -1,27 +1,50 @@
-<p>gestion works!</p>
-<h5>Establecimiento XXXXXX</h5>
+<h5>Gestión</h5>
 <div class="row">
-    <div class="col-lg-12 text-center">
+    <div class="col-lg-12">
         <nb-card>
-            <nb-card-body>
+          <nb-card-body>
+            <div class="filtro-container">
+              <div class="filtro-indicador">
                 <span>Indicador</span>
-              <nb-select placeholder="Indicador" size="small">
-                <nb-option value="1">Indicador 1</nb-option>
-                <nb-option value="2">Indicador 2</nb-option>
-                <nb-option value="3">Indicador 3</nb-option>
-              </nb-select>
-              <span>Año</span>
-              <nb-select placeholder="Año" size="small">
-                <nb-option value="2022">2022</nb-option>
-                <nb-option value="2021">2021</nb-option>
-                <nb-option value="2020">2020</nb-option>
-                <nb-option value="2019">2019</nb-option>
-                <nb-option value="2018">2018</nb-option>
-              </nb-select>
-              <app-barchart></app-barchart>
-              <!--<app-barchart [areaChartData]="areaChartData"></app-barchart>-->
-            </nb-card-body>
+                <nb-select placeholder="Indicador" size="tiny">
+                  <nb-option value="1">Indicador 1</nb-option>
+                  <nb-option value="2">Indicador 2</nb-option>
+                  <nb-option value="3">Indicador 3</nb-option>
+                </nb-select>
+              </div>
+              <div class="filtro-indicador">
+                <span>Año</span>
+                <nb-select placeholder="Año" size="tiny">
+                  <nb-option value="2022">2022</nb-option>
+                  <nb-option value="2021">2021</nb-option>
+                  <nb-option value="2020">2020</nb-option>
+                  <nb-option value="2019">2019</nb-option>
+                  <nb-option value="2018">2018</nb-option>
+                </nb-select>
+              </div>
+              <div class="filtro-indicador">
+                <button nbButton status="primary" size="tiny">Filtrar</button>
+              </div>
+            </div>
+            <app-barchart *ngIf="areaChartData" [areaChartData]="areaChartData" [areaChartOptions]="areaChartOptions"></app-barchart>
+          
+            <h5>Tablas</h5>
+            <div>
+                <nb-tabset>
+                  <nb-tab tabTitle="Resumen" tabIcon="person-outline" responsive>
+                    <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
+                  </nb-tab>
+                  <nb-tab tabTitle="Red Bonilla" tabIcon="bell-outline" responsive>
+                    <p>List of <strong>orders</strong>.</p>
+                  </nb-tab>
+                  <nb-tab tabTitle="Red BePeCa" tabIcon="email-outline" responsive>
+                    <p>List of <strong>transactions</strong>.</p>
+                  </nb-tab>
+                </nb-tabset>
+            </div>
 
+
+          </nb-card-body>
         </nb-card>
     </div>
 </div>

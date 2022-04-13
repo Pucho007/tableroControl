@@ -1,6 +1,6 @@
-<h1>TABLA</h1>
+<h5>Resumen</h5>
 <div class="table-responsive">
-    <table id="tabla-his" class="table table-bordered table-hover" style="font-size: 10px;">
+    <table id="tabla-his" class="table table-bordered table-hover" style="font-size: 9px;">
         <thead>
           <tr style="text-align: center;">
             <ng-container *ngFor="let header of dataTable.headers; let i=index">
@@ -30,7 +30,7 @@
                     <ng-container *ngFor="let item of $any(data) | keyvalue: originalOrder; let i = index ">
                         <ng-container *ngIf="!dataTable?.indexDisable?.includes(i)">
                             <ng-container *ngIf="dataTable.rowBold==i; else data">
-                                <th scope="row">{{item.value}}</th>
+                                <th scope="row" style="text-align: start;">{{item.value}}</th>
                             </ng-container>
                             <ng-template #data>
                                 <td style="text-align: center;">{{item.value}}</td>
@@ -43,3 +43,4 @@
         </tbody>
     </table>
 </div>
+

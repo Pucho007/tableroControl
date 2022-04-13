@@ -8,6 +8,7 @@ import { ThemeModule } from '../@theme/theme.module';
 import { GestionModule } from './reportes/gestion/gestion.module';
 
 
+
 @NgModule({
   declarations: [
     PagesComponent,
@@ -19,6 +20,6 @@ import { GestionModule } from './reportes/gestion/gestion.module';
     NbMenuModule,
     GestionModule,
     ThemeModule
-  ]
+  ],
 })
 export class PagesModule { }

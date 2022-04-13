@@ -5,6 +5,7 @@ import { BarchartComponent } from './barchart/barchart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartModule } from 'angular2-chartjs';
 import { TableComponent } from './table/table.component';
+import { NbButtonModule, NbIconModule } from '@nebular/theme';
 
 
 @NgModule({
@@ -15,10 +16,13 @@ import { TableComponent } from './table/table.component';
   imports: [
     CommonModule,
     ChartModule,
-    NgxChartsModule
+    NgxChartsModule,
+    NbButtonModule,
+    NbIconModule
   ],
   exports:[
-    BarchartComponent
+    BarchartComponent,
+    TableComponent
   ]
 })
 export class CommonsModule { }
