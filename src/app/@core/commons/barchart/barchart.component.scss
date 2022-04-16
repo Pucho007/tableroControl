@@ -19,12 +19,20 @@
   }
 }
 
-.chart-container chart{
-  height: 55vh;
+.chart-container canvas{
+  height: 68vh;
 }
 
 .button-container{
   display: flex;
   justify-content: flex-end;
   margin: 1rem 0;
+}
+
+// Celulares
+
+@media (max-width: 450px) {
+  .chart-container canvas{
+    height: 58vh;
+  }
 }

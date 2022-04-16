@@ -1,6 +1,15 @@
-<h5>Gráfico</h5>
 <div class="chart-container">
-    <chart type="bar" [data]="data" [options]="options" width="200" height="200"></chart>
+    <div>
+        <div>
+          <div style="display: block">
+            <canvas baseChart
+              [data]="barChartData"
+              [options]="barChartOptions"
+              [type]="barChartType">
+            </canvas>
+          </div>
+        </div>
+    </div>
 </div>
 <div class="button-container">
     <button nbButton status="success" size="small">Descargar gráfico<nb-icon icon="download"></nb-icon></button>

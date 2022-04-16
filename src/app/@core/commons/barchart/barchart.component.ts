@@ -1,23 +1,46 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { NbColorHelper, NbThemeService } from '@nebular/theme';
+
+import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
+// import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+
 
 @Component({
   selector: 'app-barchart',
   templateUrl: './barchart.component.html',
   styleUrls: ['./barchart.component.scss']
 })
-export class BarchartComponent implements OnDestroy, OnInit {
+export class BarchartComponent implements OnDestroy, OnInit, OnChanges {
   
   @Input("areaChartData") areaChartData:any;
   @Input("areaChartOptions") areaChartOptions:any;
 
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+
+  public barChartType: ChartType = 'bar';
+  public barChartOptions: ChartConfiguration['options'];
+  public barChartData!: ChartData<'bar'>;
+
   data: any;
   options: any;
   themeSubscription: any;
-  myChart:any;
+
+
+  // public barChartPlugins = [
+  //   DataLabelsPlugin
+  // ];
 
   constructor(private theme: NbThemeService) {
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes.areaChartData.currentValue != changes.areaChartData.previousValue){
+      this.barChartData=this.areaChartData;
+      this.barChartOptions=this.areaChartOptions;
+    }
+  }
+
   ngOnInit(): void {
     //this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
 
@@ -37,11 +60,12 @@ export class BarchartComponent implements OnDestroy, OnInit {
         }],
       };*/
 
-      console.log("opened")
 
-      this.data=this.areaChartData;
+      
+      this.barChartData=this.areaChartData;
+      // this.data=this.areaChartData;
 
-      this.options=this.areaChartOptions
+      this.barChartOptions=this.areaChartOptions;
       /*this.options = {
         maintainAspectRatio: false,
         responsive: true,
@@ -82,5 +106,6 @@ export class BarchartComponent implements OnDestroy, OnInit {
     //this.themeSubscription.unsubscribe();
     console.log("destruido");
   }
+
 
 }

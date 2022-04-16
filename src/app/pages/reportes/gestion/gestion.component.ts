@@ -142,6 +142,8 @@ export class GestionComponent implements OnInit {
   }
 
   buildGrafico(responseHIS:HIS){
+    
+    // informacion del gráfico
     this.areaChartData={
       labels:['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE','NOVIEMBRE', 'DICIEMBRE'],
       datasets:[
@@ -149,33 +151,17 @@ export class GestionComponent implements OnInit {
               label:'Avances',
               data:this.chartService.getArrayAvance(responseHIS),
               backgroundColor:[
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(54, 162, 235, 0.2)'
+                  'rgba(54, 162, 235, 0.3)',
               ],
               borderColor:[
                   'rgba(54, 162, 235, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(54, 162, 235, 1)'
 
+              ],
+              hoverBackgroundColor:[
+                'rgba(54, 162, 235, 0.4)'
+              ],
+              hoverBorderColor:[
+                'rgba(54, 162, 235, 1)'
               ],
               borderWidth:1,
               order:1
@@ -185,38 +171,33 @@ export class GestionComponent implements OnInit {
               data:this.chartService.getArrayMeta(responseHIS),
               backgroundColor:[
                   'rgba(255, 99, 132, 0.2)',
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(255, 99, 132, 0.2)',
               ],
               borderColor:[
                   'rgba(255, 99, 132, 1)',
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(255, 99, 132, 1)',
               ],
+              pointBackgroundColor:[
+                'rgba(255, 99, 132, 0.2)',
+              ],
+              pointBorderColor:[
+                'rgba(255, 99, 132, 1)'
+              ],
+              pointHoverBackgroundColor:[
+                'rgba(255, 99, 132, 0.4)',
+              ],
+              pointHoverBorderColor:[
+                'rgba(255, 99, 132, 1)'
+              ],
+              pointHoverRadius:6,
+              pointRadius:4,
               borderWidth:1,
               type:"line",
               order:0
           }
       ]
     }
+
+    // Opciones del gráfico
+
     this.areaChartOptions=
     {
       scales: {
@@ -225,10 +206,53 @@ export class GestionComponent implements OnInit {
           }
       },
       maintainAspectRatio:false,
+      plugins:{
+        datalabels: {
+          anchor: 'start',
+          align: 'end',
+          labels:{
+            title: {
+              font: {
+                weight: 'bold'
+              }
+            }
+          }
+        },
+        legend:{
+          position:'bottom',
+          title:{
+            display:true,
+            text:'Leyenda',
+            font:{
+              size:14,
+              weight:'bold'
+            },
+            padding:10
+          },
+          labels:{
+            font:{
+              size:14
+            }
+          }
+        },
+        title:{
+          display:true,
+          text:responseHIS.establecimiento,
+          color:'rgba(0,0,0,1)',
+          font:{
+            size:20,
+            weight:'bold'
+          },
+          padding:{
+            top:25,
+            bottom:10
+          }
+        }
+      }
     }
 
-    this.areaChartData={...this.areaChartData};
   }
+
 
   mostrarGraficaHospital(item:HIS){
     this.buildGrafico(item);

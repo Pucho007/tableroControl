@@ -7,6 +7,8 @@ import { ChartModule } from 'angular2-chartjs';
 import { TableComponent } from './table/table.component';
 import { NbButtonModule, NbIconModule } from '@nebular/theme';
 
+import { NgChartsModule } from 'ng2-charts';
+
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { NbButtonModule, NbIconModule } from '@nebular/theme';
     ChartModule,
     NgxChartsModule,
     NbButtonModule,
-    NbIconModule
+    NbIconModule,
+    NgChartsModule
   ],
   exports:[
     BarchartComponent,
