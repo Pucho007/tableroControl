@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RegistroComponent } from './registro.component';
-import { GestionComponent } from './gestion/gestion.component';
+import { RGestionComponent } from './rgestion/rgestion.component';
 
 const routes: Routes = [
   {
@@ -10,7 +10,7 @@ const routes: Routes = [
     children:[
       {
         path:'gestion',
-        component:GestionComponent
+        component:RGestionComponent
       }
     ]
   }
