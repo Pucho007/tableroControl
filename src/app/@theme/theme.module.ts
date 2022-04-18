@@ -5,6 +5,7 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { OneColumnLayoutComponent } from './layout/one-column/one-column.layout';
+import { AuthColumnLayoutComponent } from './layout';
 
 
 
@@ -25,9 +26,8 @@ const NB_MODULES = [
 const COMPONENTS = [
   HeaderComponent,
   FooterComponent,
-//  SearchInputComponent,
-//  TinyMCEComponent,
   OneColumnLayoutComponent,
+  AuthColumnLayoutComponent
 ];
 
 

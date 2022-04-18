@@ -219,7 +219,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Gestión',
     icon: 'grid-outline',
-    link: '/pages/tables/smart-table',
+    link: '/pages/registro/gestion',
     /*children: [
       {
         title: 'Smart Table',

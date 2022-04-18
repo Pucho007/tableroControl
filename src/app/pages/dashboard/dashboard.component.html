@@ -1,1 +1,40 @@
-<p>dashboard works!</p>
+<div class="row">
+    <div class="col-lg-6">
+        <nb-card>
+            <nb-card-body>
+                1
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div class="col-lg-6">
+        <nb-card>
+            <nb-card-body>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="icon-container">
+                            <div class="icon">
+                                <nb-icon icon="upload-outline" style="color: #fff; font-size: 2.5rem;"></nb-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <span style=" font-size: 1.125rem;
+                        font-weight: 700;
+                        line-height: 1.5rem;">SUBIR REPORTES</span>
+                    </div>
+                    <div class="col-lg-3">
+                        <a href="#" nbButton fullWidth hero status="danger" size="small">ir</a>
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div class="col-lg-6">
+        <nb-card>
+            <nb-card-header>Indicador Gestión Total</nb-card-header>
+            <nb-card-body>
+                <app-barchart *ngIf="areaChartData" [areaChartData]="areaChartData" [areaChartOptions]="areaChartOptions"></app-barchart>
+            </nb-card-body>
+        </nb-card>        
+    </div>
+</div>

@@ -53,6 +53,11 @@ const routes: Routes = [
         component:RecursoshumanosComponent
       },
       {
+        path:'registro',
+        loadChildren: () => import('./registro/registro.module')
+          .then(m => m.RegistroModule),
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
