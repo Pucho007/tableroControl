@@ -10,7 +10,7 @@ export class DataService {
 
   constructor(private _httpClient:HttpClient) { }
 
-  getInfo():Observable<HIS[]>{
+  getInfo(filtro1:string, filtro2:string):Observable<HIS[]>{
     return this._httpClient.get<HIS[]>('http://localhost:4000/his_20');
   }
 

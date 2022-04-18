@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { IFiltro, IFiltroSelect } from 'src/app/@core/models/IFiltroSelect.interface';
 import { IDataTableActionComponent, HIS } from '../../../@core/models/IDatatable.interface';
 import { DataService } from '../../../@core/services/data.service';
 
@@ -83,62 +84,56 @@ export class GestionComponent implements OnInit {
     rowBold:1
   };
 
+  filtroSelect:IFiltro={
+    type:"2",
+    data:[
+      {
+        title:'Indicador',
+        data:[
+          {
+            name:'indicador 1',
+            value:'1'
+          },
+          {
+            name:'indicador 2',
+            value:'2'
+          },
+          {
+            name:'indicador 3',
+            value:'3'
+          },
+        ],
+        selectedItem:'1'
+      },
+      {
+        title:'Año',
+        data:[
+          {
+            name:'2022',
+            value:'2022'
+          },
+          {
+            name:'2021',
+            value:'2021'
+          },
+          {
+            name:'2020',
+            value:'2020'
+          },
+        ],
+        selectedItem:'2022'
+      },
+    ]
+  }
+
+
+
   
   constructor(private chartService:DataService) { }
 
 
   ngOnInit(): void {
-    this.responseHIS=[];
-    this.chartService.getInfo().subscribe((res)=>{
-      res.forEach((item:any) =>
-        this.responseHIS.push({
-          codigo: item.cod,
-          establecimiento:item["Establecimiento"],
-          meta_total:item["META TOTAL"],
-          avance_total:item["AVANCE TOTAL"],
-          porcentaje_total:item["PORCENTAJE TOTAL"],
-          meta_enero:item["META ENERO"],
-          avance_enero:item["AVANCE ENERO"],
-          porcentaje_enero:item["PORCENTAJE ENERO"],
-          meta_febrero:item["META FEBRERO"],
-          avance_febrero:item["AVANCE FEBRERO"],
-          porcentaje_febrero:item["PORCENTAJE FEBRERO"],
-          meta_marzo:item["META MARZO"],
-          avance_marzo:item["AVANCE MARZO"],
-          porcentaje_marzo:item["PORCENTAJE MARZO"],
-          meta_abril:item["META ABRIL"],
-          avance_abril:item["AVANCE ABRIL"],
-          porcentaje_abril:item["PORCENTAJE ABRIL"],
-          meta_mayo:item["META MAYO"],
-          avance_mayo:item["AVANCE MAYO"],
-          porcentaje_mayo:item["PORCENTAJE MAYO"],
-          meta_junio:item["META JUNIO"],
-          avance_junio:item["AVANCE JUNIO"],
-          porcentaje_junio:item["PORCENTAJE JUNIO"],
-          meta_julio:item["META JULIO"],
-          avance_julio:item["AVANCE JULIO"],
-          porcentaje_julio:item["PORCENTAJE JULIO"],
-          meta_agosto:item["META AGOSTO"],
-          avance_agosto:item["AVANCE AGOSTO"],
-          porcentaje_agosto:item["PORCENTAJE AGOSTO"],
-          meta_septiembre:item["META SEPTIEMBRE"],
-          avance_septiembre:item["AVANCE SEPTIEMBRE"],
-          porcentaje_septiembre:item["PORCENTAJE SEPTIEMBRE"],
-          meta_octubre:item["META OCTUBRE"],
-          avance_octubre:item["AVANCE OCTUBRE"],
-          porcentaje_octubre:item["PORCENTAJE OCTUBRE"],
-          meta_noviembre:item["META NOVIEMBRE"],
-          avance_noviembre:item["AVANCE NOVIEMBRE"],
-          porcentaje_noviembre:item["PORCENTAJE NOVIEMBRE"],
-          meta_diciembre:item["META DICIEMBRE"],
-          avance_diciembre:item["AVANCE DICIEMBRE"],
-          porcentaje_diciembre:item["PORCENTAJE DICIEMBRE"],
-        })
-      );
-      this.hospitalSeleccionado=this.responseHIS.reverse()[0]
-      this.buildGrafico(this.hospitalSeleccionado);
-      this.dataTable.data=this.responseHIS;
-    });
+    this.filtrarData(this.filtroSelect.data);
   }
 
   buildGrafico(responseHIS:HIS){
@@ -258,6 +253,58 @@ export class GestionComponent implements OnInit {
     this.buildGrafico(item);
   }
 
-
+  filtrarData(item:IFiltroSelect[]):void{
+    this.responseHIS=[];
+    this.chartService.getInfo(item[0].selectedItem,item[1].selectedItem).subscribe((res)=>{
+      res.forEach((item:any) =>
+        this.responseHIS.push({
+          codigo: item.cod,
+          establecimiento:item["Establecimiento"],
+          meta_total:item["META TOTAL"],
+          avance_total:item["AVANCE TOTAL"],
+          porcentaje_total:item["PORCENTAJE TOTAL"],
+          meta_enero:item["META ENERO"],
+          avance_enero:item["AVANCE ENERO"],
+          porcentaje_enero:item["PORCENTAJE ENERO"],
+          meta_febrero:item["META FEBRERO"],
+          avance_febrero:item["AVANCE FEBRERO"],
+          porcentaje_febrero:item["PORCENTAJE FEBRERO"],
+          meta_marzo:item["META MARZO"],
+          avance_marzo:item["AVANCE MARZO"],
+          porcentaje_marzo:item["PORCENTAJE MARZO"],
+          meta_abril:item["META ABRIL"],
+          avance_abril:item["AVANCE ABRIL"],
+          porcentaje_abril:item["PORCENTAJE ABRIL"],
+          meta_mayo:item["META MAYO"],
+          avance_mayo:item["AVANCE MAYO"],
+          porcentaje_mayo:item["PORCENTAJE MAYO"],
+          meta_junio:item["META JUNIO"],
+          avance_junio:item["AVANCE JUNIO"],
+          porcentaje_junio:item["PORCENTAJE JUNIO"],
+          meta_julio:item["META JULIO"],
+          avance_julio:item["AVANCE JULIO"],
+          porcentaje_julio:item["PORCENTAJE JULIO"],
+          meta_agosto:item["META AGOSTO"],
+          avance_agosto:item["AVANCE AGOSTO"],
+          porcentaje_agosto:item["PORCENTAJE AGOSTO"],
+          meta_septiembre:item["META SEPTIEMBRE"],
+          avance_septiembre:item["AVANCE SEPTIEMBRE"],
+          porcentaje_septiembre:item["PORCENTAJE SEPTIEMBRE"],
+          meta_octubre:item["META OCTUBRE"],
+          avance_octubre:item["AVANCE OCTUBRE"],
+          porcentaje_octubre:item["PORCENTAJE OCTUBRE"],
+          meta_noviembre:item["META NOVIEMBRE"],
+          avance_noviembre:item["AVANCE NOVIEMBRE"],
+          porcentaje_noviembre:item["PORCENTAJE NOVIEMBRE"],
+          meta_diciembre:item["META DICIEMBRE"],
+          avance_diciembre:item["AVANCE DICIEMBRE"],
+          porcentaje_diciembre:item["PORCENTAJE DICIEMBRE"],
+        })
+      );
+      this.hospitalSeleccionado=this.responseHIS.reverse()[0]
+      this.buildGrafico(this.hospitalSeleccionado);
+      this.dataTable.data=this.responseHIS;
+    });
+  }
 
 }

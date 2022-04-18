@@ -9,11 +9,16 @@ import { NbButtonModule, NbIconModule } from '@nebular/theme';
 
 import { NgChartsModule } from 'ng2-charts';
 
+import { NbSelectModule } from '@nebular/theme';
+import { FiltroSelectComponent } from './filtro-select/filtro-select.component';
+
+
 
 @NgModule({
   declarations: [
     BarchartComponent,
-    TableComponent
+    TableComponent,
+    FiltroSelectComponent
   ],
   imports: [
     CommonModule,
@@ -21,11 +26,13 @@ import { NgChartsModule } from 'ng2-charts';
     NgxChartsModule,
     NbButtonModule,
     NbIconModule,
-    NgChartsModule
+    NgChartsModule,
+    NbSelectModule
   ],
   exports:[
     BarchartComponent,
-    TableComponent
+    TableComponent,
+    FiltroSelectComponent
   ]
 })
 export class CommonsModule { }
