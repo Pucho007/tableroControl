@@ -1,6 +1,6 @@
 <div class="filtro-container mt-4">
-    <div *ngFor="let indicador of filtroSelect.data" class="filtro-indicador">
-      <span>{{indicador.title}}</span>
+    <div *ngFor="let indicador of filtroSelect.data" class="filtro-indicador text-center">
+      <span class="mb-1">{{indicador.title}}</span>
       <nb-select placeholder="Indicador" size="tiny" [(selected)]="indicador.selectedItem">
         <nb-option *ngFor="let data of indicador.data" [value]="data.value">{{data.name}}</nb-option>
       </nb-select>

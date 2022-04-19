@@ -30,4 +30,29 @@ export class TableComponent implements OnInit {
   }
 
 
+  isPorcentaje(porcentaje:string | number ):boolean{
+    let flagPorcentaje=false;
+    if(typeof porcentaje === 'number'){
+      flagPorcentaje=false;
+    }else if(porcentaje.includes("%")){
+      flagPorcentaje=true;
+    }
+    return flagPorcentaje;
+  }
+
+  isColor(item:string):string{
+    let flagNumero='';
+    const item_Numero=Number(item.substring(0, item.length - 1));
+    if(item_Numero<30){
+      flagNumero='red';
+    }else if(item_Numero<60){
+      flagNumero='yellow';
+    }else{
+      flagNumero='green';
+    }
+    return flagNumero;
+  }
+
+
+
 }

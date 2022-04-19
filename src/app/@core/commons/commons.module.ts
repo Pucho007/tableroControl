@@ -4,18 +4,21 @@ import { BarchartComponent } from './barchart/barchart.component';
 
 import { ChartModule } from 'angular2-chartjs';
 import { TableComponent } from './table/table.component';
-import { NbButtonModule, NbIconModule } from '@nebular/theme';
+import { NbButtonModule, NbIconModule, NbCardModule } from '@nebular/theme';
 
 import { NbSelectModule } from '@nebular/theme';
 import { FiltroSelectComponent } from './filtro-select/filtro-select.component';
 
 import { NgChartsModule } from 'ng2-charts';
+import { CardchartComponent } from './cardchart/cardchart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
     BarchartComponent,
     TableComponent,
-    FiltroSelectComponent
+    FiltroSelectComponent,
+    CardchartComponent
   ],
   imports: [
     CommonModule,
@@ -23,12 +26,15 @@ import { NgChartsModule } from 'ng2-charts';
     NbButtonModule,
     NbIconModule,
     NbSelectModule,
-    NgChartsModule
+    NgChartsModule,
+    NbCardModule,
+    NgxChartsModule
   ],
   exports:[
     BarchartComponent,
     TableComponent,
-    FiltroSelectComponent
+    FiltroSelectComponent,
+    CardchartComponent
   ]
 })
 export class CommonsModule { }

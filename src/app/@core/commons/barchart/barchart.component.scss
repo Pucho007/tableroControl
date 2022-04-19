@@ -28,11 +28,3 @@
   justify-content: flex-end;
   margin: 1rem 0;
 }
-
-// Celulares
-
-@media (max-width: 450px) {
-  .chart-container canvas{
-    height: 58vh;
-  }
-}

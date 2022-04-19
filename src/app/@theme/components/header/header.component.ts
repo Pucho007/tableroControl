@@ -13,7 +13,10 @@ export class HeaderComponent implements OnInit {
 
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
-  user: any;
+  user: any={
+    name:'Juan Carlos',
+    picture:'https://img.freepik.com/vector-gratis/diseno-avatar-persona_24877-38135.jpg'
+  };
 
   // themes = [
   //   {

@@ -1,7 +1,63 @@
 tr, th{
     padding: 0.2rem 0.2rem;
+    line-height: .9rem;
 }
 
 td{
     padding: 0.2rem 0.2rem;
 }
+
+.green{
+    background-color: rgb(97, 241, 128);
+}
+
+.yellow{
+    background-color: rgb(231, 241, 97);
+}
+
+.red{
+    background-color: rgb(241, 114, 97);
+}
+
+.leyenda-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box-color{
+    width: 10px;
+    height: 10px;
+    white-space: nowrap;
+}
+
+.title-card{
+    font-weight: 700;
+    font-size: 11px;
+}
+
+.leyenda-color{
+    display: flex;
+    align-items: center;
+    margin: .5rem 0 0.5rem 0;
+    font-size: 10px;
+}
+
+.leyenda-color .box-color{
+    margin-right: .5rem;
+}
+
+.leyenda-body{
+    width: 20vw;
+}
+
+.activeRow{
+    background-color: red;
+}
+
+@media (max-width: 576px) { 
+    .leyenda-body{
+        width: 70vw;
+    }
+    
+ }

@@ -2,6 +2,11 @@
     height: 100%;
 }
 
+.card-rutas-container{
+  display: flex;
+  justify-content: space-between;
+}
+
 .icon{
     background-color: #36f;
     border-radius: 0.25rem;
@@ -29,3 +34,17 @@
     flex: 1 0 calc(50% - 1rem);
     margin: 0 0.5rem;
   }
+
+
+  
+@media (max-width: 576px) { 
+  .icon-container{
+      display: none;
+  }
+
+  .card-rutas-container{
+    flex-direction: row;
+    align-items: center;
+  }
+  
+}
