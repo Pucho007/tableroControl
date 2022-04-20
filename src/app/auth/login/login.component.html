@@ -9,13 +9,13 @@
                         <small>Accede con tu cuenta asignada</small>
                     </div>
                     <div class="col-lg-12">
-                        <form (ngSubmit)="login()" #form="ngForm" aria-labelledby="title">
+                        <form (ngSubmit)="onLogin()" #form="ngForm" aria-labelledby="title" autocomplete="on">
         
                             <div class="form-control-group">
                               <label class="label w-100" for="input-email">Usuario:</label>
                               <input nbInput
                                     fullWidth
-                                     [(ngModel)]="user.email"
+                                     [(ngModel)]="username"
                                      #email="ngModel"
                                      name="email"
                                      id="input-email"
@@ -38,20 +38,20 @@
                               </span>
                               <input nbInput
                                     fullWidth
-                                     [(ngModel)]="user.password"
-                                     #password="ngModel"
-                                     name="password"
+                                     [(ngModel)]="password"
+                                     #password1="ngModel"
+                                     name="password1"
                                      type="password"
-                                     id="input-password"
+                                     id="input-password1"
                                      placeholder="Contraseña"
                                      fieldSize="large"
-                                     [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : 'basic'"
-                                     [required]="getConfigValue('forms.validation.password.required')"
-                                     [minlength]="getConfigValue('forms.validation.password.minLength')"
-                                     [maxlength]="getConfigValue('forms.validation.password.maxLength')"
-                                     [attr.aria-invalid]="password.invalid && password.touched ? true : null">
-                              <ng-container *ngIf="password.invalid && password.touched ">
-                                <p class="caption status-danger" *ngIf="password.errors?.required">
+                                     [status]="password1.dirty ? (password1.invalid  ? 'danger' : 'success') : 'basic'"
+                                     [required]="getConfigValue('forms.validation.password1.required')"
+                                     [minlength]="getConfigValue('forms.validation.password1.minLength')"
+                                     [maxlength]="getConfigValue('forms.validation.password1.maxLength')"
+                                     [attr.aria-invalid]="password1.invalid && password1.touched ? true : null">
+                              <ng-container *ngIf="password1.invalid && password1.touched ">
+                                <p class="caption status-danger" *ngIf="password1.errors?.required">
                                   La contraseña en requerida
                                 </p>
                               </ng-container>

@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 
-import { map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { TokenService } from '../../../@core/services/auth/token.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -39,17 +41,29 @@ export class HeaderComponent implements OnInit {
 
   // currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [{ title: 'Cerrar Sesión' } ];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               private themeService: NbThemeService,
               // private userService: UserData,
               //private layoutService: LayoutService,
+              private _tokenService : TokenService, 
+              private _router: Router,
               private breakpointService: NbMediaBreakpointsService) {
   }
 
   ngOnInit() {
+
+    this.menuService.onItemClick()
+      .pipe(
+        filter(({ tag }) => tag === 'my-context-menu'),
+        map(({ item: { title } }) => title),
+      )
+      .subscribe(title => {
+        this.logout();
+      });
+
     // this.currentTheme = this.themeService.currentTheme;
 
     // this.userService.getUsers()
@@ -92,4 +106,11 @@ export class HeaderComponent implements OnInit {
     this.menuService.navigateHome();
     return false;
   }
+
+  logout(): void {
+    this._tokenService.logOut();
+    this._router.navigateByUrl('/auth');
+  }
+
+
 }
