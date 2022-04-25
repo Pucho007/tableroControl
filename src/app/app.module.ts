@@ -40,6 +40,7 @@ import { SharedModule } from './shared/shared.module';
     NbThemeModule.forRoot(),
     BrowserAnimationsModule,
     NbThemeModule.forRoot({ name: 'default' }),
+    NbToastrModule.forRoot(),
     NbLayoutModule,
     NbEvaIconsModule,
     HttpClientModule,

@@ -1,12 +1,15 @@
 export interface IResponseAuth {
-    user:    User;
-    token:   string | null;
-    message: string;
+    status:string,
+    result: {
+        user:IUser,
+        token:string
+    },
+    message?: string;
 }
 
-export interface User {
-    id:          number;
-    correo:      string;
-    contrasenia: string;
-    tipo:        string;
+export interface IUser {
+    id:        number;
+    username:       string;
+    password:   string;
+    rol:       string;
 }

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { IAccount } from 'src/app/@core/models/IUser.interface';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { TokenService } from '../../@core/services/auth/token.service';
 import { AuthService } from '../../@core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { LoginUsuario } from 'src/app/@core/models/class/login-usuario';
+import { NbIconConfig, NbToastrService } from '@nebular/theme';
+import { IToast } from 'src/app/@core/models/IToast.interface';
 
 @Component({
   selector: 'app-login',
@@ -21,10 +22,15 @@ export class LoginComponent implements OnInit {
   errMsj!: string;
 
 
+  //Troast
+  @HostBinding('class')
+  classes = 'example-items-rows';
+
   constructor(
     private tokenService: TokenService,
     private authService: AuthService,
     private router: Router,
+    private toastrService: NbToastrService
   ) { }
 
   ngOnInit(): void {
@@ -38,55 +44,50 @@ export class LoginComponent implements OnInit {
 
   onLogin(): void {
     this.loginUsuario = new LoginUsuario(this.username, this.password);
-    const auth=this.authService.login(this.loginUsuario);
-    try {
-      if (auth.token !== null) {
+    console.log(this.loginUsuario);
+    this.authService.login(this.loginUsuario).subscribe(auth => {
+      if (auth.result.token !== undefined) {
         this.isLogged = true;
         this.isLoginFail = false;
-        this.tokenService.setToken(auth.token);
-        this.tokenService.setUserName(auth.user.correo);
-        this.tokenService.setAuthorities([auth.user.tipo]);
-        this.router.navigate(['/pages']);
-      }
-    } catch (error) {
-      this.isLogged = false;
-      //this.errMsj = error;
-      /*this.toastr.error(this.errMsj, 'Fail', {
-        timeOut: 3000, positionClass: 'toast-top-center',
-      });*/
-      //console.log(error);
-    }
-  }
-
-    /*this.authService.login(this.loginUsuario).subscribe(auth => {
-      if (auth.token !== null) {
-        this.isLogged = true;
-        this.isLoginFail = false;
-        this.tokenService.setToken(auth.token);
-        this.tokenService.setUserName(auth.user.correo);
-        this.tokenService.setAuthorities([auth.user.tipo]);
-        this.toastr.success(`BIENVENIDO`, 'OK', {
-          timeOut: 3000, positionClass: 'toast-top-center'
-        });
+        this.tokenService.setToken(auth.result.token);
+        this.tokenService.setUserName(auth.result.user.username);
+        this.tokenService.setAuthorities([auth.result.user.rol]);
+        
+        const toast:IToast={
+          title:'Inicio de Sesión',
+          message:'Bienvenido'+ auth.result.user.username+'',
+        }
+        this.showToast(toast,false);
         this.router.navigate(['/pages']);
       }else {
-        this.toastr.error(auth.message, 'OK', {
-          timeOut: 3000, positionClass: 'toast-top-center'
-        });
+        const toast:IToast={
+          title:'Error',
+          message:'Error al ingresar con la cuenta',
+        }
+        this.showToast(toast,false);
       }
     }, error => {
       this.isLogged = false;
       this.errMsj = error.error.message;
-      this.toastr.error(this.errMsj, 'Fail', {
-        timeOut: 3000, positionClass: 'toast-top-center',
-      });
-      console.log(error.error.message);
-
+      const toast:IToast={
+        title:'Error',
+        message:'Error con el servidor',
+      }
+      this.showToast(toast,false);
     })
-  }*/
+  }
 
   getConfigValue(value:string){
     return value;
+  }
+
+
+  showToast(toast:IToast,preventDuplicates: boolean) {
+    this.toastrService.show(
+      toast.message,
+      toast.title,
+      { preventDuplicates}
+      );
   }
 
 }
