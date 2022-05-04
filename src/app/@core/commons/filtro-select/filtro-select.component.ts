@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IFiltro, IFiltroSelect } from '../../models/IFiltroSelect.interface';
+import { IFiltro, IFiltroIndicador } from '../../models/IFiltroSelect.interface';
 
 @Component({
   selector: 'app-filtro-select',
@@ -8,8 +8,9 @@ import { IFiltro, IFiltroSelect } from '../../models/IFiltroSelect.interface';
 })
 export class FiltroSelectComponent implements OnInit {
 
-  @Input("filtroSelect") filtroSelect!:IFiltro;
-  @Output() addActionData:EventEmitter<IFiltroSelect[]>=new EventEmitter<IFiltroSelect[]>();
+  @Input("filtroSelectIndicador") filtroSelectIndicador!:IFiltro;
+  @Input("filtroSelectFecha") filtroSelectFecha!:IFiltro;
+  @Output() addActionData:EventEmitter<IFiltroIndicador>=new EventEmitter<IFiltroIndicador>();
 
   constructor() { }
 
@@ -17,7 +18,11 @@ export class FiltroSelectComponent implements OnInit {
     
   }
 
-  filtrarData(data:IFiltroSelect[]):void{
+  filtrarData(fecha:string, indicador:string):void{
+    let data: IFiltroIndicador={
+      annio:fecha,
+      indicador:indicador
+    }
     this.addActionData.emit(data);
   }
 

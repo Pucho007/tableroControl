@@ -1,11 +1,17 @@
 <div class="filtro-container mt-4">
-    <div *ngFor="let indicador of filtroSelect.data" class="filtro-indicador text-center">
-      <span class="mb-1">{{indicador.title}}</span>
-      <nb-select placeholder="Indicador" size="tiny" [(selected)]="indicador.selectedItem">
-        <nb-option *ngFor="let data of indicador.data" [value]="data.value">{{data.name}}</nb-option>
+    <div class="filtro-indicador text-center">
+      <span class="mb-1">{{filtroSelectIndicador.title}}</span>
+      <nb-select placeholder="Indicador" size="tiny" [(selected)]="filtroSelectIndicador.selectedItem">
+        <nb-option *ngFor="let data of filtroSelectIndicador.data" [value]="data.value">{{data.name}}</nb-option>
+      </nb-select>
+    </div>
+    <div class="filtro-indicador text-center">
+      <span class="mb-1">{{filtroSelectFecha.title}}</span>
+      <nb-select placeholder="Indicador" size="tiny" [(selected)]="filtroSelectFecha.selectedItem">
+        <nb-option *ngFor="let data of filtroSelectFecha.data" [value]="data.value">{{data.name}}</nb-option>
       </nb-select>
     </div>
     <div class="filtro-indicador">
-      <button nbButton status="primary" size="tiny" (click)="filtrarData(filtroSelect.data)">Filtrar</button>
+      <button nbButton status="primary" size="tiny" (click)="filtrarData(filtroSelectFecha.selectedItem, filtroSelectIndicador.selectedItem)">Filtrar</button>
     </div>
 </div>

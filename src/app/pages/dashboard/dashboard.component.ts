@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../@core/services/data.service';
-import { IFiltro, IFiltroSelect } from '../../@core/models/IFiltroSelect.interface';
+import { IDataFiltroSelect, IFiltro, IFiltroIndicador } from '../../@core/models/IFiltroSelect.interface';
 import { HIS } from '../../@core/models/IDatatable.interface';
 
 @Component({
@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   areaChartDataSend!:any;
   areaChartOptions!:any;
   
+  /*
   filtroSelect:IFiltro={
     type:"2",
     data:[
@@ -58,18 +59,22 @@ export class DashboardComponent implements OnInit {
       },
     ]
   }
-
+  */
   constructor(private chartService:DataService) { }
 
   ngOnInit(): void {
-    this.filtrarData(this.filtroSelect.data);
+    //this.filtrarData(this.filtroSelect.data);
   }
 
 
-  filtrarData(item:IFiltroSelect[]):void{
+  /*filtrarData(item:IFiltroSelect[]):void{
     this.responseHIS=[];
-    this.chartService.getInfo(item[0].selectedItem,item[1].selectedItem).subscribe((res)=>{
-      res.forEach((item:any) =>
+    let filtroSelect : IFiltroIndicador={
+      indicador:item[0].selectedItem,
+      annio:item[1].selectedItem
+    };
+    this.chartService.getInfo(filtroSelect).subscribe(({result})=>{
+      result.data.forEach((item:any) =>
         this.responseHIS.push({
           codigo: item.cod,
           establecimiento:item["Establecimiento"],
@@ -118,7 +123,8 @@ export class DashboardComponent implements OnInit {
       this.buildGrafico(this.hospitalSeleccionado);
     });
   }
-
+  */
+  
   buildGrafico(responseHIS:HIS){
     
     // informacion del gráfico

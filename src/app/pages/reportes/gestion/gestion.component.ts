@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IFiltro, IFiltroSelect } from 'src/app/@core/models/IFiltroSelect.interface';
-import { IDataTableActionComponent, HIS } from '../../../@core/models/IDatatable.interface';
+import { IFiltro } from 'src/app/@core/models/IFiltroSelect.interface';
+import { IDataTableActionComponent, HIS, IDataIndicador } from '../../../@core/models/IDatatable.interface';
 import { DataService } from '../../../@core/services/data.service';
+import { IFiltroIndicador, IDataFiltroSelect } from '../../../@core/models/IFiltroSelect.interface';
+import { SelectService } from '../../../@core/services/select/select.service';
 
 
 @Component({
@@ -11,14 +13,22 @@ import { DataService } from '../../../@core/services/data.service';
 })
 export class GestionComponent implements OnInit {
   
+
+  //variables para obtener los establecimientos
   responseHIS!:HIS[];
   hospitalSeleccionado!:HIS;
 
+  //variables para crear el grafico
   areaChartData!:any;
   areaChartDataSend!:any;
   areaChartOptions!:any;
 
+  //variable para obtener todos los indicadore segun el codigo del indicador global
+  filtroIndicador={
+    indicador:'G0000'
+  }
 
+  //variable que guarda valores de la tabla
   dataTable: IDataTableActionComponent = {
     title: 'Tablas Resumen',
     subtitulo: '',
@@ -84,56 +94,27 @@ export class GestionComponent implements OnInit {
     rowBold:1
   };
 
-  filtroSelect:IFiltro={
+  //variables que guarda los valores de los filtros
+  filtroSelectIndicador:IFiltro={
     type:"2",
-    data:[
-      {
-        title:'Indicador',
-        data:[
-          {
-            name:'indicador 1',
-            value:'1'
-          },
-          {
-            name:'indicador 2',
-            value:'2'
-          },
-          {
-            name:'indicador 3',
-            value:'3'
-          },
-        ],
-        selectedItem:'1'
-      },
-      {
-        title:'Año',
-        data:[
-          {
-            name:'2022',
-            value:'2022'
-          },
-          {
-            name:'2021',
-            value:'2021'
-          },
-          {
-            name:'2020',
-            value:'2020'
-          },
-        ],
-        selectedItem:'2022'
-      },
-    ]
+    title:"Indicador",
+    selectedItem:'G0001',
+    data:[]
   }
 
-
-
+  filtroSelectFecha:IFiltro={
+    type:"2",
+    title:"Año",
+    selectedItem:'2022',
+    data:[]
+  }
   
-  constructor(private chartService:DataService) { }
+  constructor(private chartService:DataService, private selectFiltro:SelectService) { }
 
 
   ngOnInit(): void {
-    this.filtrarData(this.filtroSelect.data);
+    //this.filtrarData(this.filtroSelect.data);
+    this.setSelected();
   }
 
   buildGrafico(responseHIS:HIS){
@@ -253,58 +234,63 @@ export class GestionComponent implements OnInit {
     this.buildGrafico(item);
   }
 
-  filtrarData(item:IFiltroSelect[]):void{
+  filtrarData(item:IFiltroIndicador):void{
     this.responseHIS=[];
-    this.chartService.getInfo(item[0].selectedItem,item[1].selectedItem).subscribe((res)=>{
-      res.forEach((item:any) =>
-        this.responseHIS.push({
-          codigo: item.cod,
-          establecimiento:item["Establecimiento"],
-          meta_total:item["META TOTAL"],
-          avance_total:item["AVANCE TOTAL"],
-          porcentaje_total:item["PORCENTAJE TOTAL"],
-          meta_enero:item["META ENERO"],
-          avance_enero:item["AVANCE ENERO"],
-          porcentaje_enero:item["PORCENTAJE ENERO"],
-          meta_febrero:item["META FEBRERO"],
-          avance_febrero:item["AVANCE FEBRERO"],
-          porcentaje_febrero:item["PORCENTAJE FEBRERO"],
-          meta_marzo:item["META MARZO"],
-          avance_marzo:item["AVANCE MARZO"],
-          porcentaje_marzo:item["PORCENTAJE MARZO"],
-          meta_abril:item["META ABRIL"],
-          avance_abril:item["AVANCE ABRIL"],
-          porcentaje_abril:item["PORCENTAJE ABRIL"],
-          meta_mayo:item["META MAYO"],
-          avance_mayo:item["AVANCE MAYO"],
-          porcentaje_mayo:item["PORCENTAJE MAYO"],
-          meta_junio:item["META JUNIO"],
-          avance_junio:item["AVANCE JUNIO"],
-          porcentaje_junio:item["PORCENTAJE JUNIO"],
-          meta_julio:item["META JULIO"],
-          avance_julio:item["AVANCE JULIO"],
-          porcentaje_julio:item["PORCENTAJE JULIO"],
-          meta_agosto:item["META AGOSTO"],
-          avance_agosto:item["AVANCE AGOSTO"],
-          porcentaje_agosto:item["PORCENTAJE AGOSTO"],
-          meta_septiembre:item["META SEPTIEMBRE"],
-          avance_septiembre:item["AVANCE SEPTIEMBRE"],
-          porcentaje_septiembre:item["PORCENTAJE SEPTIEMBRE"],
-          meta_octubre:item["META OCTUBRE"],
-          avance_octubre:item["AVANCE OCTUBRE"],
-          porcentaje_octubre:item["PORCENTAJE OCTUBRE"],
-          meta_noviembre:item["META NOVIEMBRE"],
-          avance_noviembre:item["AVANCE NOVIEMBRE"],
-          porcentaje_noviembre:item["PORCENTAJE NOVIEMBRE"],
-          meta_diciembre:item["META DICIEMBRE"],
-          avance_diciembre:item["AVANCE DICIEMBRE"],
-          porcentaje_diciembre:item["PORCENTAJE DICIEMBRE"],
+    let dataIndicador:IDataIndicador[];
+    let dataIndicadorBEPECA:IDataIndicador[];
+    let dataIndicadorBONILLA:IDataIndicador[];
+    let dataIndicadorVENTANILLA:IDataIndicador[];
+    let filtroSelect : IFiltroIndicador={
+      indicador:item.indicador,
+      annio:item.annio
+    };
+    
+    this.chartService.getInfo(filtroSelect).subscribe(({result})=>{
+      dataIndicador=[... result.data];
+
+      dataIndicadorBEPECA=[... dataIndicador].filter(item => item.Red=='BEPECA');
+      dataIndicadorBONILLA=[... dataIndicador].filter(item => item.Red=='BONILLA - LA PUNTA');
+      dataIndicadorVENTANILLA=[... dataIndicador].filter(item => item.Red=='VENTANILLA');
+
+      console.log(dataIndicadorBEPECA);
+      console.log(dataIndicadorBONILLA);
+      console.log(dataIndicadorVENTANILLA);
+
+      //this.hospitalSeleccionado=this.responseHIS.reverse()[0]
+      //this.buildGrafico(this.hospitalSeleccionado);
+      //this.dataTable.data=this.responseHIS;
+    });
+  }
+
+  
+  private setSelected():void{
+    //filtro de indicadores de la BD
+    this.selectFiltro.postInfo(this.filtroIndicador).subscribe(({result})=>{
+      result.data.forEach((item:any) => 
+        this.filtroSelectIndicador.data.push({
+          name  : item.nombre_corto_Indicador_Especifico,
+          value : item.codigo_Indicador_Especifico,
         })
       );
-      this.hospitalSeleccionado=this.responseHIS.reverse()[0]
-      this.buildGrafico(this.hospitalSeleccionado);
-      this.dataTable.data=this.responseHIS;
     });
+    
+    //filtro de fechas de la BD
+    let fechaActual = new Date();
+    let anioActual = fechaActual.getFullYear();
+    let anioInicio= 2021;
+    let fechasFiltro:IDataFiltroSelect[]=[]
+
+    for (let index=anioInicio; anioActual >= index; index++) {
+      fechasFiltro.push(
+        {
+          name:index.toString(),
+          value:index.toString()
+        }
+      )
+    }
+
+    this.filtroSelectFecha.data=[... fechasFiltro];
+
   }
 
 }

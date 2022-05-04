@@ -1,14 +1,16 @@
 export interface IFiltro{
     type:string,
-    data:IFiltroSelect[]
-}
-export interface IFiltroSelect{
     title:string,
+    selectedItem:string,
     data:IDataFiltroSelect[],
-    selectedItem:string
 }
 
 export interface IDataFiltroSelect{
     name:string,
     value:string
+}
+
+export interface IFiltroIndicador{
+    indicador:string,
+    annio:string
 }

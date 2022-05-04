@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HIS } from '../models/IDatatable.interface';
+import { HIS, IResponseIndicador } from '../models/IDatatable.interface';
+import { IFiltroIndicador } from '../models/IFiltroSelect.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,8 @@ export class DataService {
 
   constructor(private _httpClient:HttpClient) { }
 
-  getInfo(filtro1:string, filtro2:string):Observable<HIS[]>{
-    return this._httpClient.get<HIS[]>('http://localhost:4000/his_20');
+  getInfo(filtroSelect:IFiltroIndicador):Observable<IResponseIndicador>{
+    return this._httpClient.post<IResponseIndicador>('http://localhost/php_project/indicador-api', filtroSelect);
   }
 
   getArrayMeta(hospital:HIS){

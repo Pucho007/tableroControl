@@ -1,6 +1,25 @@
 
+export interface IResponseIndicador{
+    status:string,
+    result: {
+        data:IDataIndicador[]
+    },
+    message?: string;
+}
+
+export interface IDataIndicador{
+    Provincia:string,
+    Distrito:string,
+    Red:string,
+    Nombre_Establecimiento:string,
+    mes:string,
+    numerador:string,
+    denominador:string,
+    meta_Indicador_Especifico:string
+}
+
 export interface HIS{
-    codigo?:string,
+    codigo_establecimiento?:string,
     establecimiento?:string,
     meta_total?:number,
     avance_total?:number,
