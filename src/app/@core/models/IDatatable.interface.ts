@@ -72,5 +72,6 @@ export interface IDataTableActionComponent {
 	data?: any[];
 	indexDisable?:number[];
     rowBold?:number;
+    meta?:number;
 }
 //#endregion

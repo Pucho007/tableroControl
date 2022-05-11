@@ -14,10 +14,12 @@ export class TableComponent implements OnInit {
 
   rowSelected!:boolean;
 
+  metaIndicador:number=0;
+
   constructor() { }
 
   ngOnInit(): void {
-
+    this.metaIndicador=this.dataTable.meta!;
   }
 
   originalOrder = (_a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
@@ -43,9 +45,9 @@ export class TableComponent implements OnInit {
   isColor(item:string):string{
     let flagNumero='';
     const item_Numero=Number(item.substring(0, item.length - 1));
-    if(item_Numero<30){
+    if(item_Numero<this.metaIndicador*100){
       flagNumero='red';
-    }else if(item_Numero<60){
+    }else if(item_Numero<this.metaIndicador*100){
       flagNumero='yellow';
     }else{
       flagNumero='green';
