@@ -25,7 +25,7 @@
         </thead>
         <tbody>
             <ng-container *ngFor="let data of dataTable.data">
-                <tr style="cursor: pointer;" (click)="selectedRowHospital(data)">
+                <tr style="cursor: pointer;" (click)="selectedRowHospital(data)" [ngClass]="{'table-active': data.select}">
                     <ng-container *ngFor="let item of $any(data) | keyvalue: originalOrder; let i = index ">
                         <ng-container *ngIf="!dataTable?.indexDisable?.includes(i)">
                             <ng-container *ngIf="dataTable.rowBold==i; else data">

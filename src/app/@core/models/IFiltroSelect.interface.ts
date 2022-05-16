@@ -14,3 +14,9 @@ export interface IFiltroIndicador{
     indicador:string,
     annio:string
 }
+
+export interface IFiltroIndicadorRed{
+    indicador:string,
+    annio:string,
+    red:string
+}

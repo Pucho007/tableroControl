@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HIS, IResponseIndicador } from '../models/IDatatable.interface';
-import { IFiltroIndicador } from '../models/IFiltroSelect.interface';
+import { IFiltroIndicador, IFiltroIndicadorRed } from '../models/IFiltroSelect.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,10 @@ export class DataService {
 
   getInfo(filtroSelect:IFiltroIndicador):Observable<IResponseIndicador>{
     return this._httpClient.post<IResponseIndicador>('http://localhost/php_project/indicador-api', filtroSelect);
+  }
+
+  getInfoRed(filtroSelectRed:IFiltroIndicadorRed):Observable<IResponseIndicador>{
+    return this._httpClient.post<IResponseIndicador>('http://localhost/php_project/indicador-api-filtro', filtroSelectRed);
   }
 
   getArrayMeta(hospital:HIS){

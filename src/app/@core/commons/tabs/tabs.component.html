@@ -1,0 +1,9 @@
+<nb-tabset>
+    <!----<nb-tab tabTitle="RESUMEN" tabIcon="person-outline" responsive>
+      <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
+    </nb-tab>--->
+    <nb-tab *ngFor="let item of tabsFiltro"
+        [tabTitle]="item.title" [tabIcon]="item.icon" responsive>
+        <app-table *ngIf="dataTable.data" [dataTable]="dataTable"></app-table>
+    </nb-tab>
+</nb-tabset>

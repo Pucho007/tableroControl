@@ -19,6 +19,9 @@ export interface IDataIndicador{
 }
 
 export interface HIS{
+    //seleccionar fila en la tabla
+    select?:boolean,
+    //data que necesito
     codigo_establecimiento?:string,
     establecimiento?:string,
     meta_total?:number,
