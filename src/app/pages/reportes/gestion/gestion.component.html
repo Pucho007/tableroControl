@@ -5,7 +5,7 @@
           <nb-card-body>
             <app-filtro-select *ngIf="filtroSelectIndicador && filtroSelectFecha" [filtroSelectIndicador]="filtroSelectIndicador" [filtroSelectFecha]="filtroSelectFecha" (addActionData)="filtrarData($event)"></app-filtro-select>
             <app-barchart *ngIf="areaChartData" [areaChartData]="areaChartData" [areaChartOptions]="areaChartOptions"></app-barchart>
-            <div *ngIf="dataIndicador">
+            <div *ngIf="dataMetaIndicador">
                 <nb-tabset (changeTab)="selectTab($event)">
                   <nb-tab tabTitle="RESUMEN" tabIcon="person-outline"  responsive>
                     <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
@@ -16,9 +16,9 @@
                   <nb-tab tabTitle="RED BEPECA" tabIcon="email-outline"  responsive>
                     <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
                   </nb-tab>
-                  <!---<nb-tab tabTitle="RED VENTANILLA" tabIcon="email-outline"  responsive>
+                  <nb-tab tabTitle="RED VENTANILLA" tabIcon="email-outline"  responsive>
                     <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
-                  </nb-tab>--->
+                  </nb-tab>
                 </nb-tabset>
             </div>
           </nb-card-body>

@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IFiltro } from 'src/app/@core/models/IFiltroSelect.interface';
 import { IDataTableActionComponent, HIS, IDataIndicador } from '../../../@core/models/IDatatable.interface';
 import { DataService } from '../../../@core/services/data.service';
 import { IFiltroIndicador, IDataFiltroSelect } from '../../../@core/models/IFiltroSelect.interface';
 import { SelectService } from '../../../@core/services/select/select.service';
-import { ITabs } from 'src/app/@core/models/ITabs.interface';
+import { IMetaIndicador } from 'src/app/@core/models/IMeta.interface';
 
 
 @Component({
@@ -57,43 +57,30 @@ export class GestionComponent implements OnInit {
       "Nombre",
       "A",
       "M",
-      "%",
       "A",
       "M",
-      "%",
       "A",
       "M",
-      "%",
       "A",
       "M",
-      "%",
       "A",
       "M",
-      "%",
       "A",
       "M",
-      "%",
       "A",
       "M",
-      "%",
       "A",
       "M",
-      "%",
       "A",
       "M",
-      "%",
       "A",
       "M",
-      "%",
       "A",
       "M",
-      "%",
       "A",
       "M",
-      "%",
       "A",
       "M",
-      "%",
     ],
     indexDisable: [0,1],
     rowBold:2
@@ -123,11 +110,27 @@ export class GestionComponent implements OnInit {
 
   //VARIABLE PARA GUARDAR LA INFORMACION QUE VIENE DEL API
   dataIndicador!:IDataIndicador[];
+
+  //VARIABLE PARA GUARDAR LA META DEL INDICADOR
+  dataMetaIndicador!:IMetaIndicador[];
+
+
+  //VARIABLE GUARDAR EL TAB SELECCIONADO
+  tabIndicador:any={
+    tabTitle:'RESUMEN'
+  }
   
   constructor(private chartService:DataService, private selectFiltro:SelectService) { }
 
 
   ngOnInit(): void {
+
+    //obtener la meta del indicador
+    this.chartService.getInfoMeta(this.filtroSelect).subscribe(({result})=>{
+      this.dataMetaIndicador= [... result.data];
+    });
+
+
     //Rellenar el campo de filtro de indicador - annio
     this.setSelected();
 
@@ -265,9 +268,15 @@ export class GestionComponent implements OnInit {
       annio:item.annio
     };
     
+
     this.chartService.getInfo(this.filtroSelect).subscribe(({result})=>{
       this.dataIndicador=[... result.data];
+
+      this.selectTab(this.tabIndicador);
     });
+
+
+
   }
 
   
@@ -317,24 +326,36 @@ export class GestionComponent implements OnInit {
     switch (item.tabTitle) {
       case 'RESUMEN':
         this.obtenerDataResumen();
+        this.tabIndicador={
+          tabTitle:'RESUMEN'
+        };
         break;
       case 'RED BONILLA - LA PUNTA':
         this.obtenerDataRedBonilla();
+        this.tabIndicador={
+          tabTitle:'RED BONILLA - LA PUNTA'
+        };
         break;
       case 'RED BEPECA':
         this.obtenerDataRedBepeca();
+        this.tabIndicador={
+          tabTitle:'RED BEPECA'
+        };
         break;
       case 'RED VENTANILLA':
-        //this.obtenerDataRedVentanilla();
+        this.obtenerDataRedVentanilla();
+        this.tabIndicador={
+          tabTitle:'RED VENTANILLA'
+        };
         break;
-
       default:
-        console.log('OK')
+        console.log('OK');
         break;
     }
   }
 
   obtenerDataResumen(){
+
     this.responseHIS=[];
     let dataIndicadorBEPECA:IDataIndicador[];
     let dataIndicadorBONILLA:IDataIndicador[];
@@ -345,16 +366,14 @@ export class GestionComponent implements OnInit {
     dataIndicadorVENTANILLA=[... this.dataIndicador].filter(item => item.Red=='VENTANILLA');
 
     this.responseHIS.push (this.obtenerDataTabla(this.dataIndicador, 'DIRESA CALLAO'));
-    
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBEPECA, 'BEPECA'));
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBONILLA, 'BONILLA - LA PUNTA'));
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVENTANILLA, 'VENTANILLA'));
     
-
     this.hospitalSeleccionado=this.responseHIS[0];
     this.buildGrafico(this.hospitalSeleccionado);
     this.dataTable.data=this.responseHIS;
-    this.dataTable.meta=Number(this.dataIndicador[0].meta_Indicador_Especifico);
+    this.dataTable.meta=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico);
     this.printRowDataTable(this.hospitalSeleccionado);
   }
 
@@ -378,21 +397,21 @@ export class GestionComponent implements OnInit {
     let dataIndicadorJuanPablo:IDataIndicador[];
 
     dataIndicadorBONILLA=[... this.dataIndicador].filter(item => item.Red=='BONILLA - LA PUNTA');
-    dataIndicadorManuelBonilla=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='MANUEL BONILLA');
-    dataIndicadorAlbertoBarton=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='ALBERTO BARTON');
-    dataIndicadorPuertoNuevo=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento== 'P.S. SANTA FE');
-    dataIndicadorLaPunta=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='P.S. LA PUNTA  ( EX-LUIS VALLEJO SANTONI )');
-    dataIndicadorSanJuanBosco=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='SAN JUAN BOSCO');
-    dataIndicadorSantaFe=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='P.S. SANTA FE');
-    dataIndicadorCallao=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='CALLAO');
-    dataIndicadorJoseBoterin=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='JOSE BOTERIN');
-    dataIndicadorJoseOlaya=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='P.S. JOSE OLAYA');
-    dataIndicadorMiguelGrau=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='MIGUEL GRAU');
-    dataIndicadorSantaRosa=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='P.S. SANTA ROSA');
-    dataIndicadorNestorGambetta=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='NESTOR GAMBETTA');
-    dataIndicadorRamonCastilla=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='RAMON CASTILLA');
-    dataIndicadorAcapulco=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='CENTRO DE SALUD ACAPULCO');
-    dataIndicadorJuanPablo=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='JUAN PABLO II');
+    dataIndicadorManuelBonilla=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='MANUEL BONILLA');
+    dataIndicadorAlbertoBarton=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='ALBERTO BARTON');
+    dataIndicadorPuertoNuevo=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento== 'P.S. SANTA FE');
+    dataIndicadorLaPunta=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='P.S. LA PUNTA  ( EX-LUIS VALLEJO SANTONI )');
+    dataIndicadorSanJuanBosco=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='SAN JUAN BOSCO');
+    dataIndicadorSantaFe=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='P.S. SANTA FE');
+    dataIndicadorCallao=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='CALLAO');
+    dataIndicadorJoseBoterin=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='JOSE BOTERIN');
+    dataIndicadorJoseOlaya=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='P.S. JOSE OLAYA');
+    dataIndicadorMiguelGrau=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='MIGUEL GRAU');
+    dataIndicadorSantaRosa=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='P.S. SANTA ROSA');
+    dataIndicadorNestorGambetta=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='NESTOR GAMBETTA');
+    dataIndicadorRamonCastilla=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='RAMON CASTILLA');
+    dataIndicadorAcapulco=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='CENTRO DE SALUD ACAPULCO');
+    dataIndicadorJuanPablo=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='JUAN PABLO II');
 
 
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBONILLA, 'RED BONILLA - LA PUNTA'));
@@ -416,7 +435,7 @@ export class GestionComponent implements OnInit {
     this.hospitalSeleccionado=this.responseHIS[0];
     this.buildGrafico(this.hospitalSeleccionado);
     this.dataTable.data=this.responseHIS;
-    this.dataTable.meta=Number(this.dataIndicador[0].meta_Indicador_Especifico);
+    this.dataTable.meta=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico);
     this.printRowDataTable(this.hospitalSeleccionado);
   }
 
@@ -440,21 +459,21 @@ export class GestionComponent implements OnInit {
     let dataIndicadorPerla:IDataIndicador[];
 
     dataIndicadorBepeca=[... this.dataIndicador].filter(item => item.Red=='BEPECA');
-    dataIndicadorFaucett=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='P. S. FAUCETT');
-    dataIndicadorMillas=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='P.S. 200 MILLAS');
-    dataIndicadorOquendo=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento== 'PALMERAS DE OQUENDO');
-    dataIndicadorSesquicentenario=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='C.S. SESQUICENTENARIO');
-    dataIndicadorPrevi=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='P.S. PREVI');
-    dataIndicadorBocanegra=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='P.S. BOCANEGRA');
-    dataIndicadorAlamo=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='P.S.EL ALAMO');
-    dataIndicadorAeropuerto=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='AEROPUERTO');
-    dataIndicadorRimac=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='PUESTO DE SALUD PLAYA RIMAC');
-    dataIndicadorPoligono=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='P.S. POLIGONO IV');
-    dataIndicadorBellavista=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='C.S. BELLAVISTA PERU COREA');
-    dataIndicadorAltaMar=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='P.S. ALTA MAR');
-    dataIndicadorMilagros=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='VILLA SR. DE LOS MILAGROS');
-    dataIndicadorCarmenLegua=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='P.S. CARMEN DE LA LEGUA');
-    dataIndicadorPerla=[... this.dataIndicador].filter(item => item.Nombre_Establecimiento=='P.S. LA PERLA');
+    dataIndicadorFaucett=[... dataIndicadorBepeca].filter(item => item.Nombre_Establecimiento=='P. S. FAUCETT');
+    dataIndicadorMillas=[... dataIndicadorBepeca].filter(item => item.Nombre_Establecimiento=='P.S. 200 MILLAS');
+    dataIndicadorOquendo=[... dataIndicadorBepeca].filter(item => item.Nombre_Establecimiento== 'PALMERAS DE OQUENDO');
+    dataIndicadorSesquicentenario=[... dataIndicadorBepeca].filter(item => item.Nombre_Establecimiento=='C.S. SESQUICENTENARIO');
+    dataIndicadorPrevi=[... dataIndicadorBepeca].filter(item => item.Nombre_Establecimiento=='P.S. PREVI');
+    dataIndicadorBocanegra=[... dataIndicadorBepeca].filter(item => item.Nombre_Establecimiento=='P.S. BOCANEGRA');
+    dataIndicadorAlamo=[... dataIndicadorBepeca].filter(item => item.Nombre_Establecimiento=='P.S.EL ALAMO');
+    dataIndicadorAeropuerto=[... dataIndicadorBepeca].filter(item => item.Nombre_Establecimiento=='AEROPUERTO');
+    dataIndicadorRimac=[... dataIndicadorBepeca].filter(item => item.Nombre_Establecimiento=='PUESTO DE SALUD PLAYA RIMAC');
+    dataIndicadorPoligono=[... dataIndicadorBepeca].filter(item => item.Nombre_Establecimiento=='P.S. POLIGONO IV');
+    dataIndicadorBellavista=[... dataIndicadorBepeca].filter(item => item.Nombre_Establecimiento=='C.S. BELLAVISTA PERU COREA');
+    dataIndicadorAltaMar=[... dataIndicadorBepeca].filter(item => item.Nombre_Establecimiento=='P.S. ALTA MAR');
+    dataIndicadorMilagros=[... dataIndicadorBepeca].filter(item => item.Nombre_Establecimiento=='VILLA SR. DE LOS MILAGROS');
+    dataIndicadorCarmenLegua=[... dataIndicadorBepeca].filter(item => item.Nombre_Establecimiento=='P.S. CARMEN DE LA LEGUA');
+    dataIndicadorPerla=[... dataIndicadorBepeca].filter(item => item.Nombre_Establecimiento=='P.S. LA PERLA');
 
 
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBepeca, 'RED BEPECA'));
@@ -473,16 +492,75 @@ export class GestionComponent implements OnInit {
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorMilagros, 'VILLA SR. DE LOS MILAGROS'));
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorCarmenLegua, 'P.S. CARMEN DE LA LEGUA'));
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorPerla, 'P.S. LA PERLA'));
-    
 
     this.hospitalSeleccionado=this.responseHIS[0];
     this.buildGrafico(this.hospitalSeleccionado);
     this.dataTable.data=this.responseHIS;
-    this.dataTable.meta=Number(this.dataIndicador[0].meta_Indicador_Especifico);
+    this.dataTable.meta=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico);
     this.printRowDataTable(this.hospitalSeleccionado);
   }
 
+  obtenerDataRedVentanilla(){
+    this.responseHIS=[];
 
+    let dataIndicadorVentanilla:IDataIndicador[];
+    let dataIndicadorPachacutec:IDataIndicador[];
+    let dataIndicador03Febrero:IDataIndicador[];
+    let dataIndicadorBahiaBlanca:IDataIndicador[];
+    let dataIndicadorCiudadPachacutec:IDataIndicador[];
+    let dataIndicadorSantaRosaPachacutec:IDataIndicador[];
+    let dataIndicadorAngamos:IDataIndicador[];
+    let dataIndicadorHijosGrau:IDataIndicador[];
+    let dataIndicadorDefensoresPatria:IDataIndicador[];
+    let dataIndicadorVentanillaAlta:IDataIndicador[];
+    let dataIndicadorVillaReyes:IDataIndicador[];
+    let dataIndicadorLuisCasas:IDataIndicador[];
+    let dataIndicadorMiPeru:IDataIndicador[];
+    let dataIndicadorMarquez:IDataIndicador[];
+    let dataIndicadorVentanillaEste:IDataIndicador[];
+    let dataIndicadorVentanillaBaja:IDataIndicador[];
+
+
+    dataIndicadorVentanilla=[... this.dataIndicador].filter(item => item.Red=='VENTANILLA');
+    dataIndicadorPachacutec=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='MATERNO INFANTIL PACHACUTEC  PERU-COREA');
+    dataIndicador03Febrero=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P. S. FAUCETT');
+    dataIndicadorBahiaBlanca=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. 200 MILLAS');
+    dataIndicadorCiudadPachacutec=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento== 'PALMERAS DE OQUENDO');
+    dataIndicadorSantaRosaPachacutec=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='C.S. SESQUICENTENARIO');
+    dataIndicadorAngamos=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. PREVI');
+    dataIndicadorHijosGrau=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. BOCANEGRA');
+    dataIndicadorDefensoresPatria=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S.EL ALAMO');
+    dataIndicadorVentanillaAlta=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='AEROPUERTO');
+    dataIndicadorVillaReyes=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='PUESTO DE SALUD PLAYA RIMAC');
+    dataIndicadorLuisCasas=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. POLIGONO IV');
+    dataIndicadorMiPeru=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='C.S. BELLAVISTA PERU COREA');
+    dataIndicadorMarquez=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. ALTA MAR');
+    dataIndicadorVentanillaEste=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='VILLA SR. DE LOS MILAGROS');
+    dataIndicadorVentanillaBaja=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. CARMEN DE LA LEGUA');
+
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVentanilla, 'Red Ventanilla'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorPachacutec, 'MATERNO INFANTIL PACHACUTEC  PERU-COREA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicador03Febrero, 'P.S. FAUCETT'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBahiaBlanca, 'P.S. 200 MILLAS'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorCiudadPachacutec, 'PALMERAS DE OQUENDO'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorSantaRosaPachacutec, 'C.S. SESQUICENTENARIO'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorAngamos, 'P.S. PREVI'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorHijosGrau, 'P.S. BOCANEGRA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorDefensoresPatria, 'P.S.EL ALAMO'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVentanillaAlta, 'AEROPUERTO'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVillaReyes, 'PUESTO DE SALUD PLAYA RIMAC'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorLuisCasas, 'P.S. POLIGONO IV'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorMiPeru, 'C.S. BELLAVISTA PERU COREA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorMarquez, 'P.S. ALTA MAR'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVentanillaEste, 'VILLA SR. DE LOS MILAGROS'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVentanillaBaja, 'P.S. CARMEN DE LA LEGUA'));
+    
+    this.hospitalSeleccionado=this.responseHIS[0];
+    this.buildGrafico(this.hospitalSeleccionado);
+    this.dataTable.data=this.responseHIS;
+    this.dataTable.meta=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico);
+    this.printRowDataTable(this.hospitalSeleccionado);
+  }
 
 
   private obtenerDataTabla(dataRed:IDataIndicador[], establecimiento_tabla:string):HIS{
@@ -491,47 +569,72 @@ export class GestionComponent implements OnInit {
     let codigo_establecimiento='000000';
 
     let establecimiento=establecimiento_tabla;
-    let avance_total=dataRed.map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
-    let meta_total=Math.round(dataRed.map(item => item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0)*0.6);
-    let avance_enero=dataRed.filter((item)=> item.mes=='1').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
-    let meta_enero=Math.round(dataRed.filter((item)=> item.mes=='1').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0)*0.6);
-    let avance_febrero=dataRed.filter((item)=> item.mes=='2').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
-    let meta_febrero=Math.round(dataRed.filter((item)=> item.mes=='2').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0)*0.6);
-    let avance_marzo=dataRed.filter((item)=> item.mes=='3').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
-    let meta_marzo=Math.round(dataRed.filter((item)=> item.mes=='3').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0)*0.6);
-    let avance_abril=dataRed.filter((item)=> item.mes=='4').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
-    let meta_abril=Math.round(dataRed.filter((item)=> item.mes=='4').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0)*0.6);
-    let avance_mayo=dataRed.filter((item)=> item.mes=='5').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
-    let meta_mayo=Math.round(dataRed.filter((item)=> item.mes=='5').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0)*0.6);
-    let avance_junio=dataRed.filter((item)=> item.mes=='6').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
-    let meta_junio=Math.round(dataRed.filter((item)=> item.mes=='6').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0)*0.6);
-    let avance_julio=dataRed.filter((item)=> item.mes=='7').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
-    let meta_julio=Math.round(dataRed.filter((item)=> item.mes=='7').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0)*0.6);
-    let avance_agosto=dataRed.filter((item)=> item.mes=='8').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
-    let meta_agosto=Math.round(dataRed.filter((item)=> item.mes=='8').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0)*0.6);
-    let avance_septiembre=dataRed.filter((item)=> item.mes=='9').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
-    let meta_septiembre=Math.round(dataRed.filter((item)=> item.mes=='9').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0)*0.6);
-    let avance_octubre=dataRed.filter((item)=> item.mes=='10').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
-    let meta_octubre=Math.round(dataRed.filter((item)=> item.mes=='10').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0)*0.6);
-    let avance_noviembre=dataRed.filter((item)=> item.mes=='11').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
-    let meta_noviembre=Math.round(dataRed.filter((item)=> item.mes=='11').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0)*0.6);
-    let avance_diciembre=dataRed.filter((item)=> item.mes=='12').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
-    let meta_diciembre=Math.round(dataRed.filter((item)=> item.mes=='12').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0)*0.6);
 
+    let numerador_total=dataRed.map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let denominador_total=dataRed.map(item => item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let avance_total= denominador_total != 0 ? Number(((numerador_total/denominador_total)*100).toFixed(2)): 0.0;
+    let meta_total=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico)* 100;
 
-    let porcentaje_total      = meta_total != 0 ?      ((avance_total/meta_total)*100).toFixed(2).toString()+"%" : '0.0%';
-    let porcentaje_enero      = meta_enero != 0 ?      ((avance_enero/meta_enero)*100).toFixed(2).toString()+"%" : '0.0%';
-    let porcentaje_febrero    = meta_febrero != 0 ?    ((avance_febrero/meta_febrero)*100).toFixed(2).toString()+"%" : '0.0%';
-    let porcentaje_marzo      = meta_marzo != 0 ?      ((avance_marzo/meta_marzo)*100).toFixed(2).toString()+"%" : '0.0%';
-    let porcentaje_abril      = meta_abril != 0 ?      ((avance_abril/meta_abril)*100).toFixed(2).toString()+"%" : '0.0%';
-    let porcentaje_mayo       = meta_mayo != 0 ?       ((avance_mayo/meta_mayo)*100).toFixed(2).toString()+"%" : '0.0%';
-    let porcentaje_junio      = meta_junio != 0 ?      ((avance_junio/meta_junio)*100).toFixed(2).toString()+"%" : '0.0%';
-    let porcentaje_julio      = meta_julio != 0 ?      ((avance_julio/meta_julio)*100).toFixed(2).toString()+"%" : '0.0%';
-    let porcentaje_agosto     = meta_agosto != 0 ?     ((avance_agosto/meta_agosto)*100).toFixed(2).toString()+"%" : '0.0%';
-    let porcentaje_septiembre = meta_septiembre != 0 ? ((avance_septiembre/meta_septiembre)*100).toFixed(2).toString()+"%" : '0.0%';
-    let porcentaje_octubre    = meta_octubre != 0 ?    ((avance_octubre/meta_octubre)*100).toFixed(2).toString()+"%" : '0.0%';
-    let porcentaje_noviembre  = meta_noviembre != 0 ?  ((avance_noviembre/meta_noviembre)*100).toFixed(2).toString()+"%" : '0.0%';
-    let porcentaje_diciembre  = meta_diciembre != 0 ?  ((avance_diciembre/meta_diciembre)*100).toFixed(2).toString()+"%" : '0.0%';
+    let numerador_enero=dataRed.filter((item)=> item.mes=='1').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let denominador_enero=dataRed.filter((item)=> item.mes=='1').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let avance_enero= denominador_enero != 0 ? Number(((numerador_enero/denominador_enero)*100).toFixed(2)): 0.0;
+    let meta_enero=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico)*100;
+
+    let numerador_febrero=dataRed.filter((item)=> item.mes=='2').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let denominador_febrero=dataRed.filter((item)=> item.mes=='2').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let avance_febrero= denominador_febrero != 0 ? Number(((numerador_febrero/denominador_febrero)*100).toFixed(2)): 0.0;
+    let meta_febrero=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico)*100;
+    
+    let numerador_marzo=dataRed.filter((item)=> item.mes=='3').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let denominador_marzo=dataRed.filter((item)=> item.mes=='3').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let avance_marzo=denominador_marzo != 0 ? Number(((numerador_marzo/denominador_marzo)*100).toFixed(2)): 0.0;
+    let meta_marzo=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico)*100;
+
+    let numerador_abril=dataRed.filter((item)=> item.mes=='4').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let denominador_abril=dataRed.filter((item)=> item.mes=='4').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let avance_abril=denominador_abril != 0 ? Number(((numerador_abril/denominador_abril)*100).toFixed(2)): 0.0;
+    let meta_abril=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico)*100;
+
+    let numerador_mayo=dataRed.filter((item)=> item.mes=='5').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let denominador_mayo=dataRed.filter((item)=> item.mes=='5').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let avance_mayo= denominador_mayo != 0 ? Number(((numerador_mayo/denominador_mayo)*100).toFixed(2)) : 0.0;
+    let meta_mayo=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico)*100;
+
+    let numerador_junio=dataRed.filter((item)=> item.mes=='6').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let denominador_junio=dataRed.filter((item)=> item.mes=='6').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let avance_junio= denominador_junio != 0 ? Number(((numerador_junio/denominador_junio)*100).toFixed(2)) : 0.0;
+    let meta_junio=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico)*100;
+
+    let numerador_julio=dataRed.filter((item)=> item.mes=='7').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let denominador_julio=dataRed.filter((item)=> item.mes=='7').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let avance_julio= denominador_julio != 0 ? Number(((numerador_julio/denominador_julio)*100).toFixed(2)) : 0.0;
+    let meta_julio=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico)*100;
+
+    let numerador_agosto=dataRed.filter((item)=> item.mes=='8').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let denominador_agosto=dataRed.filter((item)=> item.mes=='8').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let avance_agosto= denominador_agosto != 0 ? Number(((numerador_agosto/denominador_agosto)*100).toFixed(2)): 0.0;
+    let meta_agosto=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico)*100;
+
+    let numerador_septiembre=dataRed.filter((item)=> item.mes=='9').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let denominador_septiembre=dataRed.filter((item)=> item.mes=='9').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let avance_septiembre= denominador_septiembre != 0 ? Number(((numerador_septiembre/denominador_septiembre)*100).toFixed(2)) : 0.0;
+    let meta_septiembre=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico)*100;
+
+    let numerador_octubre=dataRed.filter((item)=> item.mes=='10').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let denominador_octubre=dataRed.filter((item)=> item.mes=='10').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let avance_octubre= denominador_octubre != 0 ? Number(((numerador_octubre/denominador_octubre)*100).toFixed(2)): 0.0;
+    let meta_octubre=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico)*100;
+
+    let numerador_noviembre=dataRed.filter((item)=> item.mes=='11').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let denominador_noviembre=dataRed.filter((item)=> item.mes=='11').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let avance_noviembre= denominador_noviembre != 0 ? Number(((numerador_noviembre/denominador_noviembre)*100).toFixed(2)): 0.0;
+    let meta_noviembre=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico)*100;
+
+    let numerador_diciembre=dataRed.filter((item)=> item.mes=='12').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let denominador_diciembre=dataRed.filter((item)=> item.mes=='12').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
+    let avance_diciembre= denominador_diciembre != 0 ? Number(((numerador_diciembre/denominador_diciembre)*100).toFixed(2)) : 0.0;
+    let meta_diciembre=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico)*100;
+
 
     let establecimientoRed:HIS={
       select:false,
@@ -539,43 +642,30 @@ export class GestionComponent implements OnInit {
       establecimiento:establecimiento,
       avance_total:avance_total,
       meta_total:meta_total,
-      porcentaje_total:porcentaje_total,
       avance_enero: avance_enero,
       meta_enero:meta_enero,
-      porcentaje_enero:porcentaje_enero,
       avance_febrero: avance_febrero,
       meta_febrero:meta_febrero,
-      porcentaje_febrero:porcentaje_febrero,
       avance_marzo: avance_marzo,
       meta_marzo: meta_marzo,
-      porcentaje_marzo:porcentaje_marzo,
       avance_abril: avance_abril,
       meta_abril:meta_abril,
-      porcentaje_abril:porcentaje_abril,
       avance_mayo: avance_mayo,
       meta_mayo:meta_mayo,
-      porcentaje_mayo:porcentaje_mayo,
       avance_junio: avance_junio,
       meta_junio: meta_junio,
-      porcentaje_junio:porcentaje_junio,
       avance_julio: avance_julio,
       meta_julio: meta_julio,
-      porcentaje_julio:porcentaje_julio,
       avance_agosto: avance_agosto,
       meta_agosto: meta_agosto,
-      porcentaje_agosto:porcentaje_agosto,
       avance_septiembre: avance_septiembre,
       meta_septiembre: meta_septiembre,
-      porcentaje_septiembre:porcentaje_septiembre,
       avance_octubre: avance_octubre,
       meta_octubre: meta_octubre,
-      porcentaje_octubre:porcentaje_octubre,
       avance_noviembre: avance_noviembre,
       meta_noviembre: meta_noviembre,
-      porcentaje_noviembre:porcentaje_noviembre,
       avance_diciembre:avance_diciembre,
       meta_diciembre:meta_diciembre,
-      porcentaje_diciembre:porcentaje_diciembre
     }
       
 
