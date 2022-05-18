@@ -44,10 +44,12 @@ export class TableComponent implements OnInit {
 
   isColor(item:string):string{
     let flagNumero='';
-    const item_Numero=Number(item.substring(0, item.length - 1));
-    if(item_Numero<this.metaIndicador*100){
+    //const item_Numero=Number(item.substring(0, item.length - 1));
+    const item_Numero=Number(item);
+    //console.log(item_Numero);
+    if(item_Numero<this.dataTable.meta!*100){
       flagNumero='red';
-    }else if(item_Numero<this.metaIndicador*100){
+    }else if(item_Numero<this.dataTable.meta!*100){
       flagNumero='yellow';
     }else{
       flagNumero='green';

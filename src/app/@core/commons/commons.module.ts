@@ -13,6 +13,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { CardchartComponent } from './cardchart/cardchart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { TabsComponent } from './tabs/tabs.component';
+import { LeyendaTableComponent } from './leyenda-table/leyenda-table.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TabsComponent } from './tabs/tabs.component';
     TableComponent,
     FiltroSelectComponent,
     CardchartComponent,
-    TabsComponent
+    TabsComponent,
+    LeyendaTableComponent
   ],
   imports: [
     CommonModule,

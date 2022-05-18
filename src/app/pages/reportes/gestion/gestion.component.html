@@ -19,6 +19,9 @@
                   <nb-tab tabTitle="RED VENTANILLA" tabIcon="email-outline"  responsive>
                     <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
                   </nb-tab>
+                  <nb-tab tabTitle="NO PERTENECE A NINGUNA RED" tabIcon="email-outline"  responsive>
+                    <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
+                  </nb-tab>
                 </nb-tabset>
             </div>
           </nb-card-body>

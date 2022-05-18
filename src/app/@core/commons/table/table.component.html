@@ -29,17 +29,20 @@
                     <ng-container *ngFor="let item of $any(data) | keyvalue: originalOrder; let i = index ">
                         <ng-container *ngIf="!dataTable?.indexDisable?.includes(i)">
                             <ng-container *ngIf="dataTable.rowBold==i; else data">
-                                <th scope="row" style="text-align: start;">{{item.value}}</th>
+                                <th scope="row" style="text-align: start;">&nbsp;&nbsp;&nbsp;&nbsp;{{item.value}}</th>
                             </ng-container>
                             <ng-template #data>
-                                <ng-container *ngIf="isPorcentaje(item.value); else numero">
+                                <!---<ng-container *ngIf="isPorcentaje(item.value); else numero">
                                     <td style="text-align: center;"
                                         [ngClass]="{'green': isColor(item.value) === 'green', 'yellow' : isColor(item.value) === 'yellow','red' : isColor(item.value) === 'red' }"
                                     >{{item.value}}</td>
-                                </ng-container>
-                                <ng-template #numero>
+                                </ng-container>--->
+                                <!---<ng-template #numero>
                                     <td style="text-align: center;">{{item.value}}</td>
-                                </ng-template>
+                                </ng-template>--->
+                                <td style="text-align: center;"
+                                        [ngClass]="{'green': isColor(item.value) === 'green', 'yellow' : isColor(item.value) === 'yellow','red' : isColor(item.value) === 'red' }"
+                                >{{item.value}}</td>
                             </ng-template>
                         </ng-container>
                     </ng-container>
@@ -50,18 +53,4 @@
     </table>
 </div>
 
-<div class="leyenda-container mt-3">
-    <nb-card>
-        <nb-card-body class="leyenda-body">
-            <span class="title-card">Leyenda:</span>
-            <div class="leyenda-color">
-                <div class="box-color" style="background-color: rgb(97, 241, 128);"></div>
-                <span class="leyenda-text"><strong>Éxito:</strong> de 60% a más</span>
-            </div>
-            <div class="leyenda-color">
-                <div class="box-color" style="background-color: rgb(241, 114, 97);"></div>
-                <span class="leyenda-text"> <strong>Riesgo:</strong> De menos a 59.9%</span>
-            </div>
-        </nb-card-body>
-    </nb-card>
-</div>
+<app-leyenda-table *ngIf="dataTable.meta" [metaIndicador]="dataTable.meta" ></app-leyenda-table>

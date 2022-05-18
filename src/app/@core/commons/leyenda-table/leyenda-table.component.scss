@@ -1,0 +1,42 @@
+.leyenda-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box-color{
+    width: 10px;
+    height: 10px;
+    white-space: nowrap;
+}
+
+.title-card{
+    font-weight: 700;
+    font-size: 11px;
+}
+
+.leyenda-color{
+    display: flex;
+    align-items: center;
+    margin: .5rem 0 0.5rem 0;
+    font-size: 10px;
+}
+
+.leyenda-color .box-color{
+    margin-right: .5rem;
+}
+
+.leyenda-body{
+    width: 20vw;
+}
+
+.activeRow{
+    background-color: red;
+}
+
+@media (max-width: 576px) { 
+    .leyenda-body{
+        width: 70vw;
+    }
+    
+ }

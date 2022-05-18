@@ -3,7 +3,7 @@ import { NbColorHelper, NbThemeService } from '@nebular/theme';
 
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-// import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 
 
 @Component({
@@ -18,6 +18,11 @@ export class BarchartComponent implements OnDestroy, OnInit, OnChanges {
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
+  public barChartPlugins = [
+    DataLabelsPlugin
+  ];
+
+
   public barChartType: ChartType = 'bar';
   public barChartOptions: ChartConfiguration['options'];
   public barChartData!: ChartData<'bar'>;
@@ -25,11 +30,6 @@ export class BarchartComponent implements OnDestroy, OnInit, OnChanges {
   data: any;
   options: any;
   themeSubscription: any;
-
-
-  // public barChartPlugins = [
-  //   DataLabelsPlugin
-  // ];
 
   constructor(private theme: NbThemeService) {
   }
@@ -101,6 +101,19 @@ export class BarchartComponent implements OnDestroy, OnInit, OnChanges {
       };*/
     //});
   }
+
+
+  donwloadCanva(){
+    // Crear un elemento <a>
+    let enlace = document.createElement('a');
+    // El título
+    enlace.download = "Canvas como imagen.png";
+    // Convertir la imagen a Base64 y ponerlo en el enlace
+    enlace.href = this.chart?.chart?.canvas.toDataURL()!;
+    // Hacer click en él
+    enlace.click();
+  }
+
 
   ngOnDestroy(): void {
     //this.themeSubscription.unsubscribe();

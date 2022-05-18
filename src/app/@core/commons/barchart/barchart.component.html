@@ -5,6 +5,7 @@
             <canvas baseChart
               [data]="barChartData"
               [options]="barChartOptions"
+              [plugins]="barChartPlugins"
               [type]="barChartType">
             </canvas>
           </div>
@@ -12,5 +13,5 @@
     </div>
 </div>
 <div class="button-container">
-    <button nbButton status="success" size="small">Descargar gráfico<nb-icon icon="download"></nb-icon></button>
+    <button nbButton status="success" size="small" (click)="donwloadCanva()">Descargar gráfico<nb-icon icon="download"></nb-icon></button>
 </div>

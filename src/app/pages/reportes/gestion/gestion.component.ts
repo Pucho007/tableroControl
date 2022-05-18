@@ -5,6 +5,7 @@ import { DataService } from '../../../@core/services/data.service';
 import { IFiltroIndicador, IDataFiltroSelect } from '../../../@core/models/IFiltroSelect.interface';
 import { SelectService } from '../../../@core/services/select/select.service';
 import { IMetaIndicador } from 'src/app/@core/models/IMeta.interface';
+import { ICodigoIndicador, INombreInterface } from '../../../@core/models/IIndicador.inteface';
 
 
 @Component({
@@ -119,17 +120,19 @@ export class GestionComponent implements OnInit {
   tabIndicador:any={
     tabTitle:'RESUMEN'
   }
+
+  //VARIABLE PARA GUARDAR EL NOMBRE LARGO DEL INDICADOR
+
+  codigo:ICodigoIndicador={
+    indicador:''
+  };
+
+  nombre_largo_indicador:string='';
   
   constructor(private chartService:DataService, private selectFiltro:SelectService) { }
 
 
   ngOnInit(): void {
-
-    //obtener la meta del indicador
-    this.chartService.getInfoMeta(this.filtroSelect).subscribe(({result})=>{
-      this.dataMetaIndicador= [... result.data];
-    });
-
 
     //Rellenar el campo de filtro de indicador - annio
     this.setSelected();
@@ -145,7 +148,7 @@ export class GestionComponent implements OnInit {
       labels:['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE','NOVIEMBRE', 'DICIEMBRE'],
       datasets:[
           {
-              label:'Avances',
+              label:'Avances %',
               data:this.chartService.getArrayAvance(responseHIS),
               backgroundColor:[
                   'rgba(54, 162, 235, 0.3)',
@@ -164,7 +167,7 @@ export class GestionComponent implements OnInit {
               order:1
           },
           {
-              label:'Metas',
+              label:'Metas %',
               data:this.chartService.getArrayMeta(responseHIS),
               backgroundColor:[
                   'rgba(255, 99, 132, 0.2)',
@@ -185,7 +188,7 @@ export class GestionComponent implements OnInit {
                 'rgba(255, 99, 132, 1)'
               ],
               pointHoverRadius:6,
-              pointRadius:4,
+              pointRadius:1,
               borderWidth:1,
               type:"line",
               order:0
@@ -198,8 +201,12 @@ export class GestionComponent implements OnInit {
     this.areaChartOptions=
     {
       scales: {
-          y: {
-              beginAtZero: true
+          y:{
+            max:100,
+            min:0,
+            ticks:{
+              stepSize:5
+            }
           }
       },
       maintainAspectRatio:false,
@@ -232,7 +239,7 @@ export class GestionComponent implements OnInit {
             }
           }
         },
-        title:{
+        subtitle:{
           display:true,
           text:responseHIS.establecimiento,
           color:'rgba(0,0,0,1)',
@@ -245,10 +252,17 @@ export class GestionComponent implements OnInit {
             bottom:10
           }
         },
-        scales: {
-          y: {
-            suggestedMin: 0,
-            suggestedMax: 100
+        title:{
+          display:true,
+          text:[this.nombre_largo_indicador, responseHIS.establecimiento],
+          color:'rgba(0,0,0,1)',
+          font:{
+            size:20,
+            weight:'bold'
+          },
+          padding:{
+            top:25,
+            bottom:10
           }
         }
       }
@@ -267,7 +281,23 @@ export class GestionComponent implements OnInit {
       indicador:item.indicador,
       annio:item.annio
     };
+
+    this.codigo={
+      indicador: this.filtroSelect.indicador
+    }
+    //obtener el nombre largo del indicador
+    this.chartService.getInfoIndicadorNombre(this.codigo).subscribe(({result})=>{
+      this.nombre_largo_indicador=result.data[0].nombre_largo_Indicador_Especifico;
+    })
+
+    //obtener la meta del indicador
+    this.chartService.getInfoMeta(this.filtroSelect).subscribe(({result})=>{
+      this.dataMetaIndicador= [... result.data];
+    });
     
+
+
+    //Obtener la infomracion de cada establecimiento
 
     this.chartService.getInfo(this.filtroSelect).subscribe(({result})=>{
       this.dataIndicador=[... result.data];
@@ -285,8 +315,8 @@ export class GestionComponent implements OnInit {
     this.selectFiltro.postInfo(this.filtroIndicador).subscribe(({result})=>{
       result.data.forEach((item:any) => 
         this.filtroSelectIndicador.data.push({
-          name  : item.nombre_corto_Indicador_Especifico,
-          value : item.codigo_Indicador_Especifico,
+          name         : item.nombre_corto_Indicador_Especifico,
+          value        : item.codigo_Indicador_Especifico,
         })
       );
     });
@@ -349,7 +379,10 @@ export class GestionComponent implements OnInit {
         };
         break;
       default:
-        console.log('OK');
+        this.obtenerDataRedOtros();
+        this.tabIndicador={
+          tabTitle:'NO PERTENECE A NINGUNA RED'
+        };
         break;
     }
   }
@@ -360,15 +393,18 @@ export class GestionComponent implements OnInit {
     let dataIndicadorBEPECA:IDataIndicador[];
     let dataIndicadorBONILLA:IDataIndicador[];
     let dataIndicadorVENTANILLA:IDataIndicador[];
+    let dataIndicadorOTROS:IDataIndicador[];
 
     dataIndicadorBEPECA=[... this.dataIndicador].filter(item => item.Red=='BEPECA');
     dataIndicadorBONILLA=[... this.dataIndicador].filter(item => item.Red=='BONILLA - LA PUNTA');
     dataIndicadorVENTANILLA=[... this.dataIndicador].filter(item => item.Red=='VENTANILLA');
+    dataIndicadorOTROS=[... this.dataIndicador].filter(item => item.Red=='NO PERTENECE A NINGUNA RED');
 
     this.responseHIS.push (this.obtenerDataTabla(this.dataIndicador, 'DIRESA CALLAO'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBEPECA, 'BEPECA'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBONILLA, 'BONILLA - LA PUNTA'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVENTANILLA, 'VENTANILLA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBEPECA, 'RED BEPECA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBONILLA, 'RED BONILLA - LA PUNTA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVENTANILLA, 'RED VENTANILLA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorOTROS, 'RED OTROS'));
     
     this.hospitalSeleccionado=this.responseHIS[0];
     this.buildGrafico(this.hospitalSeleccionado);
@@ -415,21 +451,21 @@ export class GestionComponent implements OnInit {
 
 
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBONILLA, 'RED BONILLA - LA PUNTA'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorManuelBonilla, 'MANUEL BONILLA'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorAlbertoBarton, 'ALBERTO BARTON'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorPuertoNuevo, 'PUERTO NUEVO'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorLaPunta, 'LA PUNTA'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorSanJuanBosco, 'SAN JUAN BOSCO'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorSantaFe, 'SANTA FE'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorCallao, 'CALLAO'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorJoseBoterin, 'JOSE BOTERIN'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorJoseOlaya, 'JOSE OLAYA'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorMiguelGrau, 'MIGUEL GRAU'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorSantaRosa, 'SANTA ROSA'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorNestorGambetta, 'NESTOR GAMBETTA'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorRamonCastilla, 'RAMON CASTILLA'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorAcapulco, 'ACAPULCO'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorJuanPablo, 'JUAN PABLO II'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorManuelBonilla, 'C.S. MANUEL BONILLA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorAlbertoBarton, 'C.S. ALBERTO BARTON'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorPuertoNuevo, 'C.S. PUERTO NUEVO'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorLaPunta, 'C.S. LA PUNTA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorSanJuanBosco, 'C.S. SAN JUAN BOSCO'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorSantaFe, 'C.S. SANTA FE'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorCallao, 'C.S. CALLAO'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorJoseBoterin, 'C.S. JOSE BOTERIN'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorJoseOlaya, 'C.S. JOSE OLAYA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorMiguelGrau, 'C.S. MIGUEL GRAU'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorSantaRosa, 'C.S. SANTA ROSA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorNestorGambetta, 'C.S. NESTOR GAMBETTA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorRamonCastilla, 'C.S. RAMON CASTILLA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorAcapulco, 'C.S. ACAPULCO'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorJuanPablo, 'C.S. JUAN PABLO II'));
     
 
     this.hospitalSeleccionado=this.responseHIS[0];
@@ -477,21 +513,21 @@ export class GestionComponent implements OnInit {
 
 
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBepeca, 'RED BEPECA'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorFaucett, 'P.S. FAUCETT'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorMillas, 'P.S. 200 MILLAS'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorOquendo, 'PALMERAS DE OQUENDO'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorFaucett, 'C.S. FAUCETT'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorMillas, 'C.S. 200 MILLAS'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorOquendo, 'C.S. PALMERAS DE OQUENDO'));
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorSesquicentenario, 'C.S. SESQUICENTENARIO'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorPrevi, 'P.S. PREVI'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBocanegra, 'P.S. BOCANEGRA'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorAlamo, 'P.S.EL ALAMO'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorAeropuerto, 'AEROPUERTO'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorRimac, 'PUESTO DE SALUD PLAYA RIMAC'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorPrevi, 'C.S. PREVI'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBocanegra, 'C.S. BOCANEGRA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorAlamo, 'C.S.EL ALAMO'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorAeropuerto, 'C.S. AEROPUERTO'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorRimac, 'C.S. PLAYA RIMAC'));
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorPoligono, 'P.S. POLIGONO IV'));
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBellavista, 'C.S. BELLAVISTA PERU COREA'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorAltaMar, 'P.S. ALTA MAR'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorMilagros, 'VILLA SR. DE LOS MILAGROS'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorCarmenLegua, 'P.S. CARMEN DE LA LEGUA'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorPerla, 'P.S. LA PERLA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorAltaMar, 'C.S. ALTA MAR'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorMilagros, 'C.S. VILLA SR. DE LOS MILAGROS'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorCarmenLegua, 'C.S. CARMEN DE LA LEGUA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorPerla, 'C.S. LA PERLA'));
 
     this.hospitalSeleccionado=this.responseHIS[0];
     this.buildGrafico(this.hospitalSeleccionado);
@@ -523,37 +559,66 @@ export class GestionComponent implements OnInit {
 
     dataIndicadorVentanilla=[... this.dataIndicador].filter(item => item.Red=='VENTANILLA');
     dataIndicadorPachacutec=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='MATERNO INFANTIL PACHACUTEC  PERU-COREA');
-    dataIndicador03Febrero=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P. S. FAUCETT');
-    dataIndicadorBahiaBlanca=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. 200 MILLAS');
-    dataIndicadorCiudadPachacutec=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento== 'PALMERAS DE OQUENDO');
-    dataIndicadorSantaRosaPachacutec=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='C.S. SESQUICENTENARIO');
-    dataIndicadorAngamos=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. PREVI');
-    dataIndicadorHijosGrau=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. BOCANEGRA');
-    dataIndicadorDefensoresPatria=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S.EL ALAMO');
-    dataIndicadorVentanillaAlta=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='AEROPUERTO');
-    dataIndicadorVillaReyes=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='PUESTO DE SALUD PLAYA RIMAC');
-    dataIndicadorLuisCasas=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. POLIGONO IV');
-    dataIndicadorMiPeru=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='C.S. BELLAVISTA PERU COREA');
-    dataIndicadorMarquez=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. ALTA MAR');
-    dataIndicadorVentanillaEste=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='VILLA SR. DE LOS MILAGROS');
-    dataIndicadorVentanillaBaja=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. CARMEN DE LA LEGUA');
+    dataIndicador03Febrero=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='03 DE FEBRERO');
+    dataIndicadorBahiaBlanca=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. BAHIA BLANCA');
+    dataIndicadorCiudadPachacutec=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento== 'P.S. CIUDAD PACHACUTEC');
+    dataIndicadorSantaRosaPachacutec=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. SANTA ROSA DE PACHACUTEC');
+    dataIndicadorAngamos=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P. S. ANGAMOS');
+    dataIndicadorHijosGrau=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. HIJOS DEL ALMIRANTE GRAU');
+    dataIndicadorDefensoresPatria=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. DEFENSORES DE LA PATRIA');
+    dataIndicadorVentanillaAlta=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. VENTANILLA ALTA');
+    dataIndicadorVillaReyes=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='CENTRO DE SALUD VILLA LOS REYES');
+    dataIndicadorLuisCasas=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. LUIS FELIPE DE LAS CASAS');
+    dataIndicadorMiPeru=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='PUESTO DE SALUD MI PERU');
+    dataIndicadorMarquez=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='C.S. MARQUEZ');
+    dataIndicadorVentanillaEste=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. VENTANILLA ESTE');
+    dataIndicadorVentanillaBaja=[... dataIndicadorVentanilla].filter(item => item.Nombre_Establecimiento=='P.S. VENTANILLA BAJA');
 
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVentanilla, 'Red Ventanilla'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorPachacutec, 'MATERNO INFANTIL PACHACUTEC  PERU-COREA'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicador03Febrero, 'P.S. FAUCETT'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBahiaBlanca, 'P.S. 200 MILLAS'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorCiudadPachacutec, 'PALMERAS DE OQUENDO'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorSantaRosaPachacutec, 'C.S. SESQUICENTENARIO'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorAngamos, 'P.S. PREVI'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorHijosGrau, 'P.S. BOCANEGRA'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorDefensoresPatria, 'P.S.EL ALAMO'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVentanillaAlta, 'AEROPUERTO'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVillaReyes, 'PUESTO DE SALUD PLAYA RIMAC'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorLuisCasas, 'P.S. POLIGONO IV'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorMiPeru, 'C.S. BELLAVISTA PERU COREA'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorMarquez, 'P.S. ALTA MAR'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVentanillaEste, 'VILLA SR. DE LOS MILAGROS'));
-    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVentanillaBaja, 'P.S. CARMEN DE LA LEGUA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorPachacutec, 'C.S.M.I MATERNO INFANTIL PACHACUTEC  PERU-COREA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicador03Febrero, 'C.S. 03 DE FEBRERO'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBahiaBlanca, 'C.S. BAHIA BLANCA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorCiudadPachacutec, 'C.S. CIUDAD PACHACUTEC'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorSantaRosaPachacutec, 'C.S. SANTA ROSA DE PACHACUTEC'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorAngamos, 'C. S. ANGAMOS'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorHijosGrau, 'C.S. HIJOS DEL ALMIRANTE GRAU'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorDefensoresPatria, 'P.S. DEFENSORES DE LA PATRIA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVentanillaAlta, 'C.S. VENTANILLA ALTA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVillaReyes, 'C.S VILLA LOS REYES'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorLuisCasas, 'C.S. LUIS FELIPE DE LAS CASAS'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorMiPeru, 'C.S MI PERU'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorMarquez, 'C.S. MARQUEZ'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVentanillaEste, 'C.S. VENTANILLA ESTE'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVentanillaBaja, 'C.S. VENTANILLA BAJA'));
+    
+    this.hospitalSeleccionado=this.responseHIS[0];
+    this.buildGrafico(this.hospitalSeleccionado);
+    this.dataTable.data=this.responseHIS;
+    this.dataTable.meta=Number(this.dataMetaIndicador[0].meta_Indicador_Especifico);
+    this.printRowDataTable(this.hospitalSeleccionado);
+  }
+
+  obtenerDataRedOtros(){
+    this.responseHIS=[];
+
+    let dataIndicadorOtros:IDataIndicador[];
+    let dataIndicadorCarrion:IDataIndicador[];
+    let dataIndicadorSanJose:IDataIndicador[];
+    let dataIndicadorVentanilla:IDataIndicador[];
+
+
+
+    dataIndicadorOtros=[... this.dataIndicador].filter(item => item.Red=='NO PERTENECE A NINGUNA RED');
+    dataIndicadorCarrion=[... dataIndicadorOtros].filter(item => item.Nombre_Establecimiento=='HOSPITAL DANIEL ALCIDES CARRION');
+    dataIndicadorSanJose=[... dataIndicadorOtros].filter(item => item.Nombre_Establecimiento=='HOSPITAL SAN JOSE');
+    dataIndicadorVentanilla=[... dataIndicadorOtros].filter(item => item.Nombre_Establecimiento=='HOSPITAL VENTANILLA');
+
+
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorOtros, 'OTROS TOTAL'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorCarrion, 'HOSPITAL DANIEL ALCIDES CARRION'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorSanJose, 'HOSPITAL SAN JOSE'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVentanilla, 'HOSPITAL VENTANILLA'));
+
     
     this.hospitalSeleccionado=this.responseHIS[0];
     this.buildGrafico(this.hospitalSeleccionado);
@@ -672,5 +737,8 @@ export class GestionComponent implements OnInit {
     return establecimientoRed;
 
   }
+
+
+
 
 }
