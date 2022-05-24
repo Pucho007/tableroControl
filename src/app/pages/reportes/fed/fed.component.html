@@ -1,1 +1,39 @@
-<p>fed works!</p>
+<h5>FED: FONDO DE ESTÍMULO Y DESARROLLO</h5>
+  <div class="row">
+      <div class="col-lg-12">
+          <nb-card>
+            <nb-card-body>
+              <app-filtro-select *ngIf="filtroSelectIndicador && filtroSelectFecha" [filtroSelectIndicador]="filtroSelectIndicador" [filtroSelectFecha]="filtroSelectFecha" (addActionData)="filtrarData($event)"></app-filtro-select>
+              <ng-container *ngIf="dataTable.data; else nada">
+                <app-barchart *ngIf="areaChartData" [areaChartData]="areaChartData" [areaChartOptions]="areaChartOptions"></app-barchart>
+                <div *ngIf="dataMetaIndicador">
+                    <nb-tabset (changeTab)="selectTab($event)">
+                      <nb-tab tabTitle="RESUMEN" tabIcon="person-outline"  responsive>
+                        <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
+                      </nb-tab>
+                      <nb-tab tabTitle="RED BONILLA - LA PUNTA" tabIcon="bell-outline"  responsive>
+                        <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
+                      </nb-tab>
+                      <nb-tab tabTitle="RED BEPECA" tabIcon="email-outline"  responsive>
+                        <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
+                      </nb-tab>
+                      <nb-tab tabTitle="RED VENTANILLA" tabIcon="email-outline"  responsive>
+                        <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
+                      </nb-tab>
+                      <nb-tab tabTitle="NO PERTENECE A NINGUNA RED" tabIcon="email-outline"  responsive>
+                        <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
+                      </nb-tab>
+                    </nb-tabset>
+                </div>
+              </ng-container>
+              <ng-template #nada>
+                ERROR EN EL SERVIDOR
+              </ng-template>
+            </nb-card-body>
+          </nb-card>
+      </div>
+  </div>
+
+
+
+

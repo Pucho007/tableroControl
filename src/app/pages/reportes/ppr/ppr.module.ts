@@ -1,29 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { PprRoutingModule } from './ppr-routing.module';
 import { PprComponent } from './ppr.component';
-import { PanComponent } from './pan/pan.component';
-import { SmnComponent } from './smn/smn.component';
-import { TbcComponent } from './tbc/tbc.component';
-import { EntComponent } from './ent/ent.component';
-import { PccComponent } from './pcc/pcc.component';
-import { SmComponent } from './sm/sm.component';
+import { NbCardModule, NbIconModule, NbTabsetModule } from '@nebular/theme';
+import { CommonsModule } from '../../../@core/commons/commons.module';
+
 
 
 @NgModule({
   declarations: [
-    PprComponent,
-    PanComponent,
-    SmnComponent,
-    TbcComponent,
-    EntComponent,
-    PccComponent,
-    SmComponent
+    PprComponent
   ],
   imports: [
     CommonModule,
-    PprRoutingModule
+    NbCardModule,
+    NbIconModule,
+    NbTabsetModule,
+    CommonsModule
   ]
 })
 export class PprModule { }

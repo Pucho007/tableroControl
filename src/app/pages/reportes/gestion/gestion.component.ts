@@ -7,7 +7,6 @@ import { SelectService } from '../../../@core/services/select/select.service';
 import { IMetaIndicador } from 'src/app/@core/models/IMeta.interface';
 import { ICodigoIndicador, INombreInterface } from '../../../@core/models/IIndicador.inteface';
 
-
 @Component({
   selector: 'app-gestion',
   templateUrl: './gestion.component.html',
@@ -292,7 +291,11 @@ export class GestionComponent implements OnInit {
 
     //obtener la meta del indicador
     this.chartService.getInfoMeta(this.filtroSelect).subscribe(({result})=>{
-      this.dataMetaIndicador= [... result.data];
+      try {
+        this.dataMetaIndicador= [... result.data];
+      } catch (error) {
+        this.dataTable.data=undefined;
+      }
     });
     
 
@@ -300,9 +303,13 @@ export class GestionComponent implements OnInit {
     //Obtener la infomracion de cada establecimiento
 
     this.chartService.getInfo(this.filtroSelect).subscribe(({result})=>{
-      this.dataIndicador=[... result.data];
+      try {
+        this.dataIndicador=[... result.data];
+        this.selectTab(this.tabIndicador);
+      } catch (error) {
+        this.dataTable.data=undefined;
+      }
 
-      this.selectTab(this.tabIndicador);
     });
 
 
@@ -353,37 +360,39 @@ export class GestionComponent implements OnInit {
 
 
   selectTab(item:any){
-    switch (item.tabTitle) {
-      case 'RESUMEN':
-        this.obtenerDataResumen();
-        this.tabIndicador={
-          tabTitle:'RESUMEN'
-        };
-        break;
-      case 'RED BONILLA - LA PUNTA':
-        this.obtenerDataRedBonilla();
-        this.tabIndicador={
-          tabTitle:'RED BONILLA - LA PUNTA'
-        };
-        break;
-      case 'RED BEPECA':
-        this.obtenerDataRedBepeca();
-        this.tabIndicador={
-          tabTitle:'RED BEPECA'
-        };
-        break;
-      case 'RED VENTANILLA':
-        this.obtenerDataRedVentanilla();
-        this.tabIndicador={
-          tabTitle:'RED VENTANILLA'
-        };
-        break;
-      default:
-        this.obtenerDataRedOtros();
-        this.tabIndicador={
-          tabTitle:'NO PERTENECE A NINGUNA RED'
-        };
-        break;
+    if(this.dataIndicador){
+      switch (item.tabTitle) {
+        case 'RESUMEN':
+          this.obtenerDataResumen();
+          this.tabIndicador={
+            tabTitle:'RESUMEN'
+          };
+          break;
+        case 'RED BONILLA - LA PUNTA':
+          this.obtenerDataRedBonilla();
+          this.tabIndicador={
+            tabTitle:'RED BONILLA - LA PUNTA'
+          };
+          break;
+        case 'RED BEPECA':
+          this.obtenerDataRedBepeca();
+          this.tabIndicador={
+            tabTitle:'RED BEPECA'
+          };
+          break;
+        case 'RED VENTANILLA':
+          this.obtenerDataRedVentanilla();
+          this.tabIndicador={
+            tabTitle:'RED VENTANILLA'
+          };
+          break;
+        default:
+          this.obtenerDataRedOtros();
+          this.tabIndicador={
+            tabTitle:'NO PERTENECE A NINGUNA RED'
+          };
+          break;
+      }
     }
   }
 

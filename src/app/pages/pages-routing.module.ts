@@ -9,6 +9,7 @@ import { CampanasaludComponent } from './reportes/campanasalud/campanasalud.comp
 import { ProduccionComponent } from './reportes/produccion/produccion.component';
 import { VphComponent } from './reportes/vph/vph.component';
 import { RecursoshumanosComponent } from './reportes/recursoshumanos/recursoshumanos.component';
+import { PprComponent } from './reportes/ppr/ppr.component';
 
 const routes: Routes = [
   {
@@ -25,8 +26,7 @@ const routes: Routes = [
       },
       {
         path: 'ppr',
-        loadChildren: () => import('./reportes/ppr/ppr.module')
-          .then(m => m.PprModule),
+        component:PprComponent
       },
       {
         path: 'fed',

@@ -9,6 +9,8 @@ import { GestionModule } from './reportes/gestion/gestion.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ReportesModule } from './reportes/reportes.module';
 import { RGestionModule } from './registro/rgestion/rgestion.module';
+import { FedModule } from './reportes/fed/fed.module';
+import { PprModule } from './reportes/ppr/ppr.module';
 
 
 
@@ -22,6 +24,8 @@ import { RGestionModule } from './registro/rgestion/rgestion.module';
     NbMenuModule,
     ThemeModule,
     GestionModule,
+    FedModule,
+    PprModule,
     DashboardModule,
     RGestionModule
   ],

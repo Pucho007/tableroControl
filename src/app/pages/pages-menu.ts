@@ -47,32 +47,33 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'PPR',
     icon: 'clipboard-outline',
-    children: [
-      {
-        title: 'Programa Articulado Nutricional',
-        link: '/pages/ppr/programa-articulado-nutricional',
-      },
-      {
-        title: 'Salud Materno Neonatal',
-        link: '/pages/ppr/salud-materno-neonatal',
-      },
-      {
-        title: 'TBC - VIH/SIDA',
-        link: '/pages/ppr/tbc',
-      },
-      {
-        title: 'Enfermedades No Transmisibles',
-        link: '/pages/ppr/enfermedades-no-transmisibles',
-      },
-      {
-        title: 'Prevención y Control del Cancer',
-        link: '/pages/ppr/prevencion-control-cancer',
-      },
-      {
-        title: 'Salud Mental',
-        link: '/pages/ppr/salud-mental',
-      },
-    ],
+    link:'/pages/ppr',
+    //children: [
+    //  {
+    //    title: 'Programa Articulado Nutricional',
+    //    link: '/pages/ppr/programa-articulado-nutricional',
+    //  },
+    //  {
+    //    title: 'Salud Materno Neonatal',
+    //    link: '/pages/ppr/salud-materno-neonatal',
+    //  },
+    //  {
+    //    title: 'TBC - VIH/SIDA',
+    //    link: '/pages/ppr/tbc',
+    //  },
+    //  {
+    //    title: 'Enfermedades No Transmisibles',
+    //    link: '/pages/ppr/enfermedades-no-transmisibles',
+    //  },
+    //  {
+    //    title: 'Prevención y Control del Cancer',
+    //    link: '/pages/ppr/prevencion-control-cancer',
+    //  },
+    //  {
+    //    title: 'Salud Mental',
+    //    link: '/pages/ppr/salud-mental',
+    //  },
+    //],
   },
   {
     title: 'FED',
