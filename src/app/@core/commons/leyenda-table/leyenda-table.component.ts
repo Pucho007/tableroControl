@@ -14,12 +14,12 @@ export class LeyendaTableComponent implements OnInit, OnChanges {
   constructor() { }
   ngOnChanges(changes: SimpleChanges): void {
     if(changes.metaIndicador.currentValue != changes.metaIndicador.previousValue){
-      this.metaIndicadorLeyenda=this.metaIndicador;
+      this.metaIndicadorLeyenda=Number(((this.metaIndicador)*100).toFixed(2));
     }
   }
 
   ngOnInit(): void {
-    this.metaIndicadorLeyenda=this.metaIndicador;
+    this.metaIndicadorLeyenda=Number(((this.metaIndicador)*100).toFixed(2));
   }
 
 }

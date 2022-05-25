@@ -14,6 +14,7 @@ import { CardchartComponent } from './cardchart/cardchart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { TabsComponent } from './tabs/tabs.component';
 import { LeyendaTableComponent } from './leyenda-table/leyenda-table.component';
+import { LineChartComponent } from './line-chart/line-chart.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { LeyendaTableComponent } from './leyenda-table/leyenda-table.component';
     FiltroSelectComponent,
     CardchartComponent,
     TabsComponent,
-    LeyendaTableComponent
+    LeyendaTableComponent,
+    LineChartComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,8 @@ import { LeyendaTableComponent } from './leyenda-table/leyenda-table.component';
     TableComponent,
     FiltroSelectComponent,
     CardchartComponent,
-    TabsComponent
+    TabsComponent,
+    LineChartComponent
   ]
 })
 export class CommonsModule { }
