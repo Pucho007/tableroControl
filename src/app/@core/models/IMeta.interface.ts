@@ -9,5 +9,5 @@ export interface IResponseIndicadorMeta{
 
 
 export interface IMetaIndicador{
-    meta_Indicador_Especifico:string
+    meta:string
 }

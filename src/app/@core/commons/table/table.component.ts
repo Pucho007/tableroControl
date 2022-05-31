@@ -57,6 +57,8 @@ export class TableComponent implements OnInit {
     return flagNumero;
   }
 
-
+  donwloadTabla(){
+    
+  }
 
 }

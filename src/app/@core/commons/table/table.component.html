@@ -41,9 +41,9 @@
                                     <td style="text-align: center;">{{item.value}}</td>
                                 </ng-template>--->
                                 <td style="text-align: center;"
-                                    [ngClass]="{'green': isColor(item.value) === 'green', 'yellow' : isColor(item.value) === 'yellow','red' : isColor(item.value) === 'red' }"
-                                    data-toggle="tooltip" data-custom-class="custom-tooltip" data-placement="top" title="% DE AVANCE"
-                                >{{item.value}}</td>
+                                    [ngClass]="{'green': isColor(item.value[0]) === 'green', 'yellow' : isColor(item.value[0]) === 'yellow','red' : isColor(item.value[0]) === 'red' }"
+                                    [nbTooltip]="item.value[1]"  status="basic"
+                                >{{item.value[0]}}</td>
                             </ng-template>
                         </ng-container>
                     </ng-container>
@@ -55,3 +55,7 @@
 </div>
 
 <app-leyenda-table *ngIf="dataTable.meta" [metaIndicador]="dataTable.meta" ></app-leyenda-table>
+
+<div class="button-container">
+    <button nbButton status="success" size="small" (click)="donwloadTabla()">Descargar Tabla<nb-icon icon="download"></nb-icon></button>
+</div>

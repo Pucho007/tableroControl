@@ -4,7 +4,7 @@ import { BarchartComponent } from './barchart/barchart.component';
 
 import { ChartModule } from 'angular2-chartjs';
 import { TableComponent } from './table/table.component';
-import { NbButtonModule, NbIconModule, NbCardModule, NbTabsetModule } from '@nebular/theme';
+import { NbButtonModule, NbIconModule, NbCardModule, NbTabsetModule, NbTooltipModule } from '@nebular/theme';
 
 import { NbSelectModule } from '@nebular/theme';
 import { FiltroSelectComponent } from './filtro-select/filtro-select.component';
@@ -15,6 +15,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { TabsComponent } from './tabs/tabs.component';
 import { LeyendaTableComponent } from './leyenda-table/leyenda-table.component';
 import { LineChartComponent } from './line-chart/line-chart.component';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { LineChartComponent } from './line-chart/line-chart.component';
     CardchartComponent,
     TabsComponent,
     LeyendaTableComponent,
-    LineChartComponent
+    LineChartComponent,
+    PieChartComponent
   ],
   imports: [
     CommonModule,
@@ -36,6 +38,7 @@ import { LineChartComponent } from './line-chart/line-chart.component';
     NbCardModule,
     NgxChartsModule,
     NbTabsetModule,
+    NbTooltipModule
   ],
   exports:[
     BarchartComponent,
@@ -43,7 +46,8 @@ import { LineChartComponent } from './line-chart/line-chart.component';
     FiltroSelectComponent,
     CardchartComponent,
     TabsComponent,
-    LineChartComponent
+    LineChartComponent,
+    PieChartComponent
   ]
 })
 export class CommonsModule { }

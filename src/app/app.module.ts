@@ -24,6 +24,9 @@ import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
 import { SharedModule } from './shared/shared.module';
 
 
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +51,7 @@ import { SharedModule } from './shared/shared.module';
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS, useClass:SpinnerInterceptor, multi:true},
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]
 })

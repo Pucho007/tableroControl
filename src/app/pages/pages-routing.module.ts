@@ -65,8 +65,8 @@ const routes: Routes = [
       { path: '**', redirectTo: 'dashboard' }
     ]
   },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' }
+//  { path: '', redirectTo: 'pages', pathMatch: 'full' },
+//  { path: '**', redirectTo: 'pages' }
 ];
 
 @NgModule({

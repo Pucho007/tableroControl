@@ -14,27 +14,25 @@ export class EndpointService {
 
 	readonly SELECT = {
 		select: `${this.host}/select-api`,
-		//increase: `${this.host}/noticias/updateviews`,
-		//update:`${this.host}/noticias/update`,
 	};
 
-	readonly TAGS={
-		//tags:`${this.host}/tipoNoticias`,
+	readonly INDICADOR={
+		indicador:`${this.host}/indicador-api`,
 		//update:`${this.host}/tipoNoticias/update`
 	}
 
-	readonly VIDEOS = {
-		//videos:`${this.host}/videos`,
+	readonly FILTRO = {
+		filtro:`${this.host}/indicador-api-filtro`,
 		//update:`${this.host}/videos/update`,
 	};
 
-	readonly PROGRAMAS = {
-		//programas:`${this.host}/programas`,
+	readonly META = {
+		meta:`${this.host}/indicador-api-meta`,
 		//update:`${this.host}/programas/update`,
 	};
 
-	readonly GALERIA = {
-		//galeria:`${this.host}/galeria`,
+	readonly NOMBREFILTRO = {
+		nombre:`${this.host}/indicador-nombre-filtro`,
 		//update:`${this.host}/galeria/update`,
 	};
 

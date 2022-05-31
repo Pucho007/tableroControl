@@ -102,6 +102,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Financiero',
     icon: 'layers-outline',
     link: '/pages/financiero',
+    hidden:true
     // children: [
     //   {
     //     title: 'Dialog',
@@ -129,6 +130,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Campaña de Salud',
     icon: 'activity-outline',
     link: '/pages/campana-salud',
+    hidden:true
     // children: [
     //   {
     //     title: 'Calendar',
@@ -160,6 +162,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Produccion',
     icon: 'npm-outline',
     link: '/pages/produccion',
+    hidden:true
     // children: [
     //   {
     //     title: 'Google Maps',
@@ -183,6 +186,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'VPH',
     icon: 'bookmark-outline',
     link: '/pages/vph',
+    hidden:true
     // children: [
     //   {
     //     title: 'Echarts',
@@ -202,6 +206,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Recursos Humanos',
     icon: 'people-outline',
     link: '/pages/recursos-humanos',
+    hidden: true
     // children: [
     //   {
     //     title: 'TinyMCE',
@@ -213,14 +218,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
     //   },
     // ],
   },
-  {
-    title: 'REGISTRO',
-    group: true,
-  },
-  {
-    title: 'Gestión',
-    icon: 'grid-outline',
-    link: '/pages/registro/gestion',
+  //{
+  //  title: 'REGISTRO',
+  //  group: true,
+  //},
+  //{
+  //  title: 'Gestión',
+  //  icon: 'grid-outline',
+  //  link: '/pages/registro/gestion',
     /*children: [
       {
         title: 'Smart Table',
@@ -231,26 +236,26 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/tables/tree-grid',
       },
     ],*/
-  },
-  {
-    title: 'OpenData PPR',
-    icon: 'shuffle-2-outline',
-    link: '/pages/miscellaneous/404',
+  //},
+  //{
+  //  title: 'OpenData PPR',
+  //  icon: 'shuffle-2-outline',
+  //  link: '/pages/miscellaneous/404',
     /*children: [
       {
         title: '404',
         link: '/pages/miscellaneous/404',
       },
     ],*/
-  },
-  {
-    title: 'Campaña',
-    icon: 'lock-outline',
-    children: [
-      {
-        title: 'Campaña Vacunometro',
-        link: '/auth/login',
-      },
+  //},
+  //{
+  //  title: 'Campaña',
+  //  icon: 'lock-outline',
+  //  children: [
+  //    {
+  //      title: 'Campaña Vacunometro',
+  //      link: '/auth/login',
+  //    },
 /*      {
         title: 'Register',
         link: '/auth/register',
@@ -263,12 +268,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Reset Password',
         link: '/auth/reset-password',
       },*/
-    ],
-  },
-  {
-    title: 'Produccion',
-    icon: 'people-outline',
-    link: '/pages/editors/tinymce',
+  //  ],
+  //},
+  //{
+  //  title: 'Produccion',
+  //  icon: 'people-outline',
+  //  link: '/pages/editors/tinymce',
     // children: [
     //   {
     //     title: 'TinyMCE',
@@ -279,11 +284,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     //     link: '/pages/editors/ckeditor',
     //   },
     // ],
-  },
-  {
-    title: 'Convenio FED',
-    icon: 'people-outline',
-    link: '/pages/editors/tinymce',
+  //},
+  //{
+  //  title: 'Convenio FED',
+  //  icon: 'people-outline',
+  //  link: '/pages/editors/tinymce',
     // children: [
     //   {
     //     title: 'TinyMCE',
@@ -294,5 +299,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     //     link: '/pages/editors/ckeditor',
     //   },
     // ],
-  },
+  //},
+
 ];
