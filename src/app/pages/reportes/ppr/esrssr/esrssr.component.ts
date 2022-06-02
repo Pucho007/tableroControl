@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { IFiltro } from 'src/app/@core/models/IFiltroSelect.interface';
-import { IDataTableActionComponent, HIS, IDataIndicador } from '../../../@core/models/IDatatable.interface';
-import { DataService } from '../../../@core/services/data.service';
-import { IFiltroIndicador, IDataFiltroSelect } from '../../../@core/models/IFiltroSelect.interface';
-import { SelectService } from '../../../@core/services/select/select.service';
-import { IMetaIndicador } from 'src/app/@core/models/IMeta.interface';
-import { ICodigoIndicador, INombreInterface } from '../../../@core/models/IIndicador.inteface';
+import { HIS, IDataTableActionComponent, IDataIndicador } from '../../../../@core/models/IDatatable.interface';
+import { IFiltro, IFiltroIndicador, IDataFiltroSelect } from '../../../../@core/models/IFiltroSelect.interface';
+import { IMetaIndicador } from '../../../../@core/models/IMeta.interface';
+import { ICodigoIndicador } from '../../../../@core/models/IIndicador.inteface';
+import { DataService } from '../../../../@core/services/data.service';
+import { SelectService } from '../../../../@core/services/select/select.service';
 
 @Component({
-  selector: 'app-gestion',
-  templateUrl: './gestion.component.html',
-  styleUrls: ['./gestion.component.scss']
+  selector: 'app-esrssr',
+  templateUrl: './esrssr.component.html',
+  styleUrls: ['./esrssr.component.scss']
 })
-export class GestionComponent implements OnInit {
-  
+export class EsrssrComponent implements OnInit {
 
   //variables para obtener los establecimientos
   responseHIS!:HIS[];
@@ -306,6 +304,10 @@ export class GestionComponent implements OnInit {
         } catch (error) {
           this.dataTable.data=undefined;
         }
+
+        console.log(this.nombre_largo_indicador);
+        console.log(this.dataMetaIndicador);
+        console.log(this.dataIndicador);
       });
 
     });
@@ -645,110 +647,105 @@ export class GestionComponent implements OnInit {
     let numerador_total=dataRed.map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let denominador_total=dataRed.map(item => item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let avance_total= denominador_total != 0 ? Number(((numerador_total/denominador_total)*100).toFixed(2)): 0.0;
-    let meta_total=Number((Number(this.dataMetaIndicador[0].meta)*100).toFixed(2));
+    let meta_total=Number(this.dataMetaIndicador[0].meta)* 100;
 
     let numerador_enero=dataRed.filter((item)=> item.mes=='1').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let denominador_enero=dataRed.filter((item)=> item.mes=='1').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let avance_enero= denominador_enero != 0 ? Number(((numerador_enero/denominador_enero)*100).toFixed(2)): 0.0;
-    let meta_enero=Number((Number(this.dataMetaIndicador[0].meta)*100).toFixed(2));
+    let meta_enero=Number(this.dataMetaIndicador[0].meta)*100;
 
     let numerador_febrero=dataRed.filter((item)=> item.mes=='2').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let denominador_febrero=dataRed.filter((item)=> item.mes=='2').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let avance_febrero= denominador_febrero != 0 ? Number(((numerador_febrero/denominador_febrero)*100).toFixed(2)): 0.0;
-    let meta_febrero=Number((Number(this.dataMetaIndicador[0].meta)*100).toFixed(2));
+    let meta_febrero=Number(this.dataMetaIndicador[0].meta)*100;
     
     let numerador_marzo=dataRed.filter((item)=> item.mes=='3').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let denominador_marzo=dataRed.filter((item)=> item.mes=='3').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let avance_marzo=denominador_marzo != 0 ? Number(((numerador_marzo/denominador_marzo)*100).toFixed(2)): 0.0;
-    let meta_marzo=Number((Number(this.dataMetaIndicador[0].meta)*100).toFixed(2));
+    let meta_marzo=Number(this.dataMetaIndicador[0].meta)*100;
 
     let numerador_abril=dataRed.filter((item)=> item.mes=='4').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let denominador_abril=dataRed.filter((item)=> item.mes=='4').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let avance_abril=denominador_abril != 0 ? Number(((numerador_abril/denominador_abril)*100).toFixed(2)): 0.0;
-    let meta_abril=Number((Number(this.dataMetaIndicador[0].meta)*100).toFixed(2));
+    let meta_abril=Number(this.dataMetaIndicador[0].meta)*100;
 
     let numerador_mayo=dataRed.filter((item)=> item.mes=='5').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let denominador_mayo=dataRed.filter((item)=> item.mes=='5').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let avance_mayo= denominador_mayo != 0 ? Number(((numerador_mayo/denominador_mayo)*100).toFixed(2)) : 0.0;
-    let meta_mayo=Number((Number(this.dataMetaIndicador[0].meta)*100).toFixed(2));
+    let meta_mayo=Number(this.dataMetaIndicador[0].meta)*100;
 
     let numerador_junio=dataRed.filter((item)=> item.mes=='6').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let denominador_junio=dataRed.filter((item)=> item.mes=='6').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let avance_junio= denominador_junio != 0 ? Number(((numerador_junio/denominador_junio)*100).toFixed(2)) : 0.0;
-    let meta_junio=Number((Number(this.dataMetaIndicador[0].meta)*100).toFixed(2));
+    let meta_junio=Number(this.dataMetaIndicador[0].meta)*100;
 
     let numerador_julio=dataRed.filter((item)=> item.mes=='7').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let denominador_julio=dataRed.filter((item)=> item.mes=='7').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let avance_julio= denominador_julio != 0 ? Number(((numerador_julio/denominador_julio)*100).toFixed(2)) : 0.0;
-    let meta_julio=Number((Number(this.dataMetaIndicador[0].meta)*100).toFixed(2));
+    let meta_julio=Number(this.dataMetaIndicador[0].meta)*100;
 
     let numerador_agosto=dataRed.filter((item)=> item.mes=='8').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let denominador_agosto=dataRed.filter((item)=> item.mes=='8').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let avance_agosto= denominador_agosto != 0 ? Number(((numerador_agosto/denominador_agosto)*100).toFixed(2)): 0.0;
-    let meta_agosto=Number((Number(this.dataMetaIndicador[0].meta)*100).toFixed(2));
+    let meta_agosto=Number(this.dataMetaIndicador[0].meta)*100;
 
     let numerador_septiembre=dataRed.filter((item)=> item.mes=='9').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let denominador_septiembre=dataRed.filter((item)=> item.mes=='9').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let avance_septiembre= denominador_septiembre != 0 ? Number(((numerador_septiembre/denominador_septiembre)*100).toFixed(2)) : 0.0;
-    let meta_septiembre=Number((Number(this.dataMetaIndicador[0].meta)*100).toFixed(2));
+    let meta_septiembre=Number(this.dataMetaIndicador[0].meta)*100;
 
     let numerador_octubre=dataRed.filter((item)=> item.mes=='10').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let denominador_octubre=dataRed.filter((item)=> item.mes=='10').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let avance_octubre= denominador_octubre != 0 ? Number(((numerador_octubre/denominador_octubre)*100).toFixed(2)): 0.0;
-    let meta_octubre=Number((Number(this.dataMetaIndicador[0].meta)*100).toFixed(2));
+    let meta_octubre=Number(this.dataMetaIndicador[0].meta)*100;
 
     let numerador_noviembre=dataRed.filter((item)=> item.mes=='11').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let denominador_noviembre=dataRed.filter((item)=> item.mes=='11').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let avance_noviembre= denominador_noviembre != 0 ? Number(((numerador_noviembre/denominador_noviembre)*100).toFixed(2)): 0.0;
-    let meta_noviembre=Number((Number(this.dataMetaIndicador[0].meta)*100).toFixed(2));
+    let meta_noviembre=Number(this.dataMetaIndicador[0].meta)*100;
 
     let numerador_diciembre=dataRed.filter((item)=> item.mes=='12').map(item => item.numerador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let denominador_diciembre=dataRed.filter((item)=> item.mes=='12').map(item=> item.denominador).reduce((a,sum)=> Number(a)+ Number(sum),0);
     let avance_diciembre= denominador_diciembre != 0 ? Number(((numerador_diciembre/denominador_diciembre)*100).toFixed(2)) : 0.0;
-    let meta_diciembre=Number((Number(this.dataMetaIndicador[0].meta)*100).toFixed(2));
+    let meta_diciembre=Number(this.dataMetaIndicador[0].meta)*100;
 
-    console.log(establecimiento, denominador_enero);
-    console.log(establecimiento, denominador_febrero);
-    console.log(establecimiento, denominador_marzo);
-    console.log(establecimiento, denominador_abril);
-    console.log(establecimiento, denominador_mayo);
 
     let establecimientoRed:HIS={
       select:false,
       codigo_establecimiento:codigo_establecimiento,
       establecimiento:establecimiento,
       avance_total:[avance_total, numerador_total],
-      meta_total:[meta_total, denominador_total > 0 ? Math.ceil(denominador_total*meta): 0],
+      meta_total:[meta_total, Math.round(denominador_total*meta)],
       avance_enero: [avance_enero, numerador_enero],
-      meta_enero:[meta_enero, denominador_enero > 0 ? Math.ceil(denominador_enero*meta): 0],
+      meta_enero:[meta_enero, Math.round(denominador_enero*meta)],
       avance_febrero: [avance_febrero, numerador_febrero],
-      meta_febrero:[meta_febrero, denominador_febrero > 0 ? Math.ceil(denominador_febrero*meta): 0 ],
+      meta_febrero:[meta_febrero, Math.round(denominador_febrero*meta)],
       avance_marzo: [avance_marzo, numerador_marzo],
-      meta_marzo: [meta_marzo, denominador_marzo > 0 ? Math.ceil(denominador_marzo*meta):0 ],
+      meta_marzo: [meta_marzo, Math.round(denominador_marzo*meta)],
       avance_abril: [avance_abril, numerador_abril],
-      meta_abril:[meta_abril, denominador_abril > 0 ? Math.ceil(denominador_abril*meta): 0],
+      meta_abril:[meta_abril, Math.round(denominador_abril*meta)],
       avance_mayo: [avance_mayo, numerador_mayo],
-      meta_mayo:[meta_mayo, denominador_mayo > 0 ? Math.ceil(denominador_mayo*meta):0],
+      meta_mayo:[meta_mayo, Math.round(denominador_mayo*meta)],
       avance_junio: [avance_junio, numerador_junio],
-      meta_junio: [meta_junio, denominador_junio > 0 ? Math.ceil(denominador_junio*meta):0],
+      meta_junio: [meta_junio, Math.round(denominador_junio*meta)],
       avance_julio: [avance_julio, numerador_julio],
-      meta_julio: [meta_julio, denominador_julio > 0 ? Math.ceil(denominador_julio*meta):0],
+      meta_julio: [meta_julio, Math.round(denominador_julio*meta)],
       avance_agosto: [avance_agosto, numerador_agosto],
-      meta_agosto: [meta_agosto, denominador_agosto > 0 ? Math.ceil(denominador_agosto*meta):0],
+      meta_agosto: [meta_agosto, Math.round(denominador_agosto*meta)],
       avance_septiembre: [avance_septiembre, numerador_septiembre],
-      meta_septiembre: [meta_septiembre, denominador_septiembre > 0 ? Math.ceil(denominador_septiembre*meta):0],
+      meta_septiembre: [meta_septiembre, Math.round(denominador_septiembre*meta)],
       avance_octubre: [avance_octubre, numerador_octubre],
-      meta_octubre: [meta_octubre, denominador_octubre > 0 ? Math.ceil(denominador_octubre*meta):0],
+      meta_octubre: [meta_octubre, Math.round(denominador_octubre*meta)],
       avance_noviembre: [avance_noviembre, numerador_noviembre],
-      meta_noviembre: [meta_noviembre, denominador_noviembre > 0 ? Math.ceil(denominador_noviembre*meta):0],
+      meta_noviembre: [meta_noviembre, Math.round(denominador_noviembre*meta)],
       avance_diciembre:[avance_diciembre, numerador_diciembre],
-      meta_diciembre:[meta_diciembre, denominador_diciembre > 0 ? Math.ceil(denominador_diciembre*meta):0],
+      meta_diciembre:[meta_diciembre, Math.round(denominador_diciembre*meta)],
     }
- 
+      
+
     return establecimientoRed;
 
   }
-
 
 
 

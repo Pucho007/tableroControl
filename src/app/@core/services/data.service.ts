@@ -23,7 +23,7 @@ export class DataService {
   }
 
   getInfoMeta(filtroSelect:IFiltroIndicador):Observable<IResponseIndicadorMeta>{
-    return this._httpClient.post<IResponseIndicadorMeta>(`${this._endPointService.META.meta}`, filtroSelect);
+    return this._httpClient.post<IResponseIndicadorMeta>(`${this._endPointService.METAGESTION.meta}`, filtroSelect);
   }
 
   getInfoIndicadorNombre(nombreInterface:ICodigoIndicador):Observable<IResponseIndicadorNombre>{

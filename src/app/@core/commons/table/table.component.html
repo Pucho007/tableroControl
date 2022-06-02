@@ -42,7 +42,7 @@
                                 </ng-template>--->
                                 <td style="text-align: center;"
                                     [ngClass]="{'green': isColor(item.value[0]) === 'green', 'yellow' : isColor(item.value[0]) === 'yellow','red' : isColor(item.value[0]) === 'red' }"
-                                    [nbTooltip]="item.value[1]"  status="basic"
+                                    [nbTooltip]="item.value[1].toString()"  status="basic"
                                 >{{item.value[0]}}</td>
                             </ng-template>
                         </ng-container>

@@ -4,12 +4,6 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { GestionComponent } from './reportes/gestion/gestion.component';
 import { FedComponent } from './reportes/fed/fed.component';
-import { FinancieroComponent } from './reportes/financiero/financiero.component';
-import { CampanasaludComponent } from './reportes/campanasalud/campanasalud.component';
-import { ProduccionComponent } from './reportes/produccion/produccion.component';
-import { VphComponent } from './reportes/vph/vph.component';
-import { RecursoshumanosComponent } from './reportes/recursoshumanos/recursoshumanos.component';
-import { PprComponent } from './reportes/ppr/ppr.component';
 
 const routes: Routes = [
   {
@@ -26,31 +20,12 @@ const routes: Routes = [
       },
       {
         path: 'ppr',
-        component:PprComponent
+        loadChildren: () => import('./reportes/ppr/ppr.module')
+        .then(m => m.PprModule),
       },
       {
         path: 'fed',
         component:FedComponent
-      },
-      {
-        path: 'financiero',
-        component:FinancieroComponent
-      },
-      {
-        path: 'campana-salud',
-        component:CampanasaludComponent
-      },
-      {
-        path: 'produccion',
-        component:ProduccionComponent
-      },
-      {
-        path: 'vph',
-        component:VphComponent
-      },
-      {
-        path: 'recursos-humanos',
-        component:RecursoshumanosComponent
       },
       {
         path:'registro',

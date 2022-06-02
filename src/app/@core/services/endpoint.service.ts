@@ -26,8 +26,13 @@ export class EndpointService {
 		//update:`${this.host}/videos/update`,
 	};
 
-	readonly META = {
-		meta:`${this.host}/indicador-api-meta`,
+	readonly METAGESTION = {
+		meta:`${this.host}/indicador-api-meta-gestion`,
+		//update:`${this.host}/programas/update`,
+	};
+
+	readonly METAOTROS = {
+		meta:`${this.host}/indicador-api-meta-otros`,
 		//update:`${this.host}/programas/update`,
 	};
 

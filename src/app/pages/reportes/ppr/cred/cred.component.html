@@ -1,4 +1,4 @@
-<!---<h5>IND. TRAZADORES - PPR</h5>
+<h5>IND. GESTIÓN Y COMPROMISO DE MEJORA</h5>
   <div class="row">
       <div class="col-lg-12">
           <nb-card>
@@ -6,7 +6,7 @@
               <app-filtro-select *ngIf="filtroSelectIndicador && filtroSelectFecha" [filtroSelectIndicador]="filtroSelectIndicador" [filtroSelectFecha]="filtroSelectFecha" (addActionData)="filtrarData($event)"></app-filtro-select>
               <ng-container *ngIf="dataTable.data; else nada">
                 <app-barchart *ngIf="areaChartData" [areaChartData]="areaChartData" [areaChartOptions]="areaChartOptions"></app-barchart>
-                <div *ngIf="dataMetaIndicador">
+                <!--<div *ngIf="dataMetaIndicador">--->
                     <nb-tabset (changeTab)="selectTab($event)">
                       <nb-tab tabTitle="RESUMEN" tabIcon="person-outline"  responsive>
                         <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
@@ -24,7 +24,7 @@
                         <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
                       </nb-tab>
                     </nb-tabset>
-                </div>
+                <!---</div>--->
               </ng-container>
               <ng-template #nada>
                 NO SE ENCONTRÓ INFORMACIÓN
@@ -34,6 +34,6 @@
       </div>
   </div>
 
----->
 
-<router-outlet></router-outlet>
+
+
