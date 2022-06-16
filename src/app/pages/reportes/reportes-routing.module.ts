@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ReportesComponent } from './reportes.component';
 import { GestionComponent } from '../reportes/gestion/gestion.component';
 import { FedComponent } from './fed/fed.component';
+import { PprComponent } from './ppr/ppr.component';
 
 const routes: Routes = [
   {
@@ -15,8 +16,7 @@ const routes: Routes = [
       },
       {
         path: 'ppr',
-        loadChildren: () => import('./ppr/ppr.module')
-          .then(m => m.PprModule),
+        component:PprComponent
       },
       {
         path: 'fed',

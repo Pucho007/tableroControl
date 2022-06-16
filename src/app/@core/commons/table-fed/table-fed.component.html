@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table id="tabla-his" class="table table-bordered table-hover" style="font-size: 10px;">
+    <table id="tabla-his" class="table table-bordered table-hover" style="font-size: 9px;">
         <thead>
           <tr style="text-align: center;">
             <ng-container *ngFor="let header of dataTable.headers; let i=index">
@@ -40,8 +40,8 @@
                                 <!---<ng-template #numero>
                                     <td style="text-align: center;">{{item.value}}</td>
                                 </ng-template>--->
-                                <td style="text-align: center; font-size: bold"
-                                    [ngClass]="{'green': isColor(item.value[0]) === 'green', 'yellow' : isColor(item.value[0]) === 'yellow','red' : isColor(item.value[0]) === 'red' }"
+                                <td style="text-align: center;"
+                                    [ngClass]="{'green': isColor(item.value) === 'green', 'yellow' : isColor(item.value) === 'yellow','red' : isColor(item.value) === 'red' }"
                                     [nbTooltip]="item.value[1].toString()"  status="basic"
                                 >{{item.value[0]}}</td>
                             </ng-template>

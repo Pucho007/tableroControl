@@ -1,12 +1,12 @@
 import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
-  {
-    title: 'Dashboard',
-    icon: 'layout-outline',
-    link: '/pages/dashboard',
-    home: true,
-  },
+  //{
+  //  title: 'Dashboard',
+  //  icon: 'layout-outline',
+  //  link: '/pages/dashboard',
+  //  home: true,
+  //},
   // {
   //   title: 'IoT Dashboard',
   //   icon: 'home-outline',
@@ -17,9 +17,34 @@ export const MENU_ITEMS: NbMenuItem[] = [
     group: true,
   },
   {
+    title: 'FED',
+    icon: 'book-outline',
+    link: '/pages/fed',
+    home:true
+    // children: [
+    //   {
+    //     title: 'Grid',
+    //     link: '/pages/ui-features/grid',
+    //   },
+    //   {
+    //     title: 'Icons',
+    //     link: '/pages/ui-features/icons',
+    //   },
+    //   {
+    //     title: 'Typography',
+    //     link: '/pages/ui-features/typography',
+    //   },
+    //   {
+    //     title: 'Animated Searches',
+    //     link: '/pages/ui-features/search-fields',
+    //   },
+    // ],
+  },
+  {
     title: 'Gestión',
     icon: 'pie-chart-outline',
     link: '/pages/gestion',
+    home:true
     // children: [
     //   {
     //     title: 'Stepper',
@@ -53,10 +78,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'CRED',
         link: '/pages/ppr/cred',
       },
-      {
-        title: 'SALUD SEXUAL Y REPRODUCTIVA',
-        link: '/pages/ppr/esrssr',
-      },
+      //{
+      //  title: 'SALUD SEXUAL Y REPRODUCTIVA',
+      //  link: '/pages/ppr/esrssr',
+      //},
       //{
       //  title: 'TBC - VIH/SIDA',
       //  link: '/pages/ppr/tbc',
@@ -74,29 +99,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
       //  link: '/pages/ppr/salud-mental',
       //},
     ],
-  },
-  {
-    title: 'FED',
-    icon: 'book-outline',
-    link: '/pages/fed',
-    // children: [
-    //   {
-    //     title: 'Grid',
-    //     link: '/pages/ui-features/grid',
-    //   },
-    //   {
-    //     title: 'Icons',
-    //     link: '/pages/ui-features/icons',
-    //   },
-    //   {
-    //     title: 'Typography',
-    //     link: '/pages/ui-features/typography',
-    //   },
-    //   {
-    //     title: 'Animated Searches',
-    //     link: '/pages/ui-features/search-fields',
-    //   },
-    // ],
   },
   {
     title: 'Financiero',

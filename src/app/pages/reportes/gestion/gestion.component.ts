@@ -403,7 +403,8 @@ export class GestionComponent implements OnInit {
     dataIndicadorBEPECA=[... this.dataIndicador].filter(item => item.Red=='BEPECA');
     dataIndicadorBONILLA=[... this.dataIndicador].filter(item => item.Red=='BONILLA - LA PUNTA');
     dataIndicadorVENTANILLA=[... this.dataIndicador].filter(item => item.Red=='VENTANILLA');
-    dataIndicadorOTROS=[... this.dataIndicador].filter(item => item.Red=='NO PERTENECE A NINGUNA RED');
+    dataIndicadorOTROS=[... this.dataIndicador].filter(item => item.Red=='NO PERTENECE A NINGUNA RED' || item.Red==null);
+    
 
     this.responseHIS.push (this.obtenerDataTabla(this.dataIndicador, 'DIRESA CALLAO'));
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBEPECA, 'RED BEPECA'));
@@ -440,7 +441,7 @@ export class GestionComponent implements OnInit {
     dataIndicadorBONILLA=[... this.dataIndicador].filter(item => item.Red=='BONILLA - LA PUNTA');
     dataIndicadorManuelBonilla=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='MANUEL BONILLA');
     dataIndicadorAlbertoBarton=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='ALBERTO BARTON');
-    dataIndicadorPuertoNuevo=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento== 'P.S. SANTA FE');
+    dataIndicadorPuertoNuevo=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento== 'C.S. PUERTO NUEVO');
     dataIndicadorLaPunta=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='P.S. LA PUNTA  ( EX-LUIS VALLEJO SANTONI )');
     dataIndicadorSanJuanBosco=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='SAN JUAN BOSCO');
     dataIndicadorSantaFe=[... dataIndicadorBONILLA].filter(item => item.Nombre_Establecimiento=='P.S. SANTA FE');
@@ -610,19 +611,22 @@ export class GestionComponent implements OnInit {
     let dataIndicadorCarrion:IDataIndicador[];
     let dataIndicadorSanJose:IDataIndicador[];
     let dataIndicadorVentanilla:IDataIndicador[];
+    let dataIndicadorBlanco:IDataIndicador[];
 
 
 
-    dataIndicadorOtros=[... this.dataIndicador].filter(item => item.Red=='NO PERTENECE A NINGUNA RED');
+    dataIndicadorOtros=[... this.dataIndicador].filter(item => item.Red=='NO PERTENECE A NINGUNA RED' || item.Red==null);
     dataIndicadorCarrion=[... dataIndicadorOtros].filter(item => item.Nombre_Establecimiento=='HOSPITAL DANIEL ALCIDES CARRION');
     dataIndicadorSanJose=[... dataIndicadorOtros].filter(item => item.Nombre_Establecimiento=='HOSPITAL SAN JOSE');
-    dataIndicadorVentanilla=[... dataIndicadorOtros].filter(item => item.Nombre_Establecimiento=='HOSPITAL VENTANILLA');
+    dataIndicadorVentanilla=[... dataIndicadorOtros].filter(item => item.Nombre_Establecimiento=='HOSPITAL DE VENTANILLA');
+    dataIndicadorBlanco=[... dataIndicadorOtros].filter(item => item.Nombre_Establecimiento==null);
 
 
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorOtros, 'OTROS TOTAL'));
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorCarrion, 'HOSPITAL DANIEL ALCIDES CARRION'));
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorSanJose, 'HOSPITAL SAN JOSE'));
     this.responseHIS.push (this.obtenerDataTabla(dataIndicadorVentanilla, 'HOSPITAL VENTANILLA'));
+    this.responseHIS.push (this.obtenerDataTabla(dataIndicadorBlanco, 'EN BLANCO'));
 
     
     this.hospitalSeleccionado=this.responseHIS[0];
@@ -707,12 +711,6 @@ export class GestionComponent implements OnInit {
     let avance_diciembre= denominador_diciembre != 0 ? Number(((numerador_diciembre/denominador_diciembre)*100).toFixed(2)) : 0.0;
     let meta_diciembre=Number((Number(this.dataMetaIndicador[0].meta)*100).toFixed(2));
 
-    console.log(establecimiento, denominador_enero);
-    console.log(establecimiento, denominador_febrero);
-    console.log(establecimiento, denominador_marzo);
-    console.log(establecimiento, denominador_abril);
-    console.log(establecimiento, denominador_mayo);
-
     let establecimientoRed:HIS={
       select:false,
       codigo_establecimiento:codigo_establecimiento,
@@ -745,6 +743,8 @@ export class GestionComponent implements OnInit {
       meta_diciembre:[meta_diciembre, denominador_diciembre > 0 ? Math.ceil(denominador_diciembre*meta):0],
     }
  
+
+    
     return establecimientoRed;
 
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges, ViewChild, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { NbColorHelper, NbThemeService } from '@nebular/theme';
 
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
@@ -42,6 +42,7 @@ export class BarchartComponent implements OnDestroy, OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+
     //this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
 
       //const colors: any = config.variables;
@@ -66,6 +67,8 @@ export class BarchartComponent implements OnDestroy, OnInit, OnChanges {
       // this.data=this.areaChartData;
 
       this.barChartOptions=this.areaChartOptions;
+
+
       /*this.options = {
         maintainAspectRatio: false,
         responsive: true,
@@ -102,8 +105,8 @@ export class BarchartComponent implements OnDestroy, OnInit, OnChanges {
     //});
   }
 
-
   donwloadCanva(){
+    this.fechaCorte();
     // Crear un elemento <a>
     let enlace = document.createElement('a');
     // El título
@@ -114,10 +117,19 @@ export class BarchartComponent implements OnDestroy, OnInit, OnChanges {
     enlace.click();
   }
 
+  fechaCorte(){
+    var heigth = this.chart?.chart?.height!;
+    var width = this.chart?.chart?.width!;
+
+    var ctx=this.chart?.chart?.ctx;
+    ctx!.font="italic 12px sans-serif";
+    ctx!.fillText("Fecha de corte 30/05/2022", width-150,10);
+  }
+
 
   ngOnDestroy(): void {
     //this.themeSubscription.unsubscribe();
-    console.log("destruido");
+
   }
 
 

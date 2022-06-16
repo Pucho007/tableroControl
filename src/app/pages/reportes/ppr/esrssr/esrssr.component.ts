@@ -305,9 +305,6 @@ export class EsrssrComponent implements OnInit {
           this.dataTable.data=undefined;
         }
 
-        console.log(this.nombre_largo_indicador);
-        console.log(this.dataMetaIndicador);
-        console.log(this.dataIndicador);
       });
 
     });

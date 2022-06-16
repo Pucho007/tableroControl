@@ -10,10 +10,10 @@ const routes: Routes = [
     path: '',
     component: PagesComponent,
     children: [
-      {
-        path: 'dashboard',
-        component:DashboardComponent
-      },
+      //{
+      //  path: 'dashboard',
+      //  component:DashboardComponent
+      //},
       {
         path: 'gestion',
         component:GestionComponent
@@ -34,10 +34,10 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'fed',
         pathMatch: 'full',
       },
-      { path: '**', redirectTo: 'dashboard' }
+      { path: '**', redirectTo: 'fed' }
     ]
   },
 //  { path: '', redirectTo: 'pages', pathMatch: 'full' },

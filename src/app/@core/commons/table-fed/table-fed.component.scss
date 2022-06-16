@@ -1,0 +1,27 @@
+tr, th{
+    padding: 0.2rem 0.2rem;
+    line-height: .9rem;
+}
+
+td{
+    padding: 0.2rem 0.2rem;
+}
+
+.green{
+    background-color: rgb(97, 241, 128);
+}
+
+.yellow{
+    background-color: rgb(231, 241, 97);
+}
+
+.red{
+    background-color: rgb(241, 114, 97);
+}
+
+
+.button-container{
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem 0;
+  }

@@ -16,6 +16,8 @@ import { TabsComponent } from './tabs/tabs.component';
 import { LeyendaTableComponent } from './leyenda-table/leyenda-table.component';
 import { LineChartComponent } from './line-chart/line-chart.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
+import { TablePprComponent } from './table-ppr/table-ppr.component';
+import { TableFedComponent } from './table-fed/table-fed.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
     TabsComponent,
     LeyendaTableComponent,
     LineChartComponent,
-    PieChartComponent
+    PieChartComponent,
+    TablePprComponent,
+    TableFedComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +51,9 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
     CardchartComponent,
     TabsComponent,
     LineChartComponent,
-    PieChartComponent
+    PieChartComponent,
+    TablePprComponent,
+    TableFedComponent
   ]
 })
 export class CommonsModule { }

@@ -21,11 +21,6 @@ export class EndpointService {
 		//update:`${this.host}/tipoNoticias/update`
 	}
 
-	readonly FILTRO = {
-		filtro:`${this.host}/indicador-api-filtro`,
-		//update:`${this.host}/videos/update`,
-	};
-
 	readonly METAGESTION = {
 		meta:`${this.host}/indicador-api-meta-gestion`,
 		//update:`${this.host}/programas/update`,

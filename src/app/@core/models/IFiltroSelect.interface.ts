@@ -12,11 +12,11 @@ export interface IDataFiltroSelect{
 
 export interface IFiltroIndicador{
     indicador:string,
-    annio:string
+    annio:string,
 }
 
-export interface IFiltroIndicadorRed{
+export interface IFiltroIndicadorMes{
     indicador:string,
     annio:string,
-    red:string
+    mes:string
 }

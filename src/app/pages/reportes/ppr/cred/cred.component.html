@@ -1,4 +1,4 @@
-<h5>IND. GESTIÓN Y COMPROMISO DE MEJORA</h5>
+<h5>INDICADORES - TRAZADORES DE CRECIMIENTO Y DESARROLLO DEL NIÑO</h5>
   <div class="row">
       <div class="col-lg-12">
           <nb-card>
@@ -9,19 +9,19 @@
                 <!--<div *ngIf="dataMetaIndicador">--->
                     <nb-tabset (changeTab)="selectTab($event)">
                       <nb-tab tabTitle="RESUMEN" tabIcon="person-outline"  responsive>
-                        <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
+                        <app-table-ppr *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table-ppr>
                       </nb-tab>
                       <nb-tab tabTitle="RED BONILLA - LA PUNTA" tabIcon="bell-outline"  responsive>
-                        <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
+                        <app-table-ppr *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table-ppr>
                       </nb-tab>
                       <nb-tab tabTitle="RED BEPECA" tabIcon="email-outline"  responsive>
-                        <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
+                        <app-table-ppr *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table-ppr>
                       </nb-tab>
                       <nb-tab tabTitle="RED VENTANILLA" tabIcon="email-outline"  responsive>
-                        <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
+                        <app-table-ppr *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table-ppr>
                       </nb-tab>
                       <nb-tab tabTitle="NO PERTENECE A NINGUNA RED" tabIcon="email-outline"  responsive>
-                        <app-table *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table>
+                        <app-table-ppr *ngIf="dataTable.data" [dataTable]="dataTable" (actionShowHospital)="mostrarGraficaHospital($event)" ></app-table-ppr>
                       </nb-tab>
                     </nb-tabset>
                 <!---</div>--->

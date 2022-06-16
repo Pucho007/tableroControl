@@ -1,3 +1,7 @@
+<div class="button-container">
+    <a nbButton status="success" size="small" href="http://oiteopendata.diresacallao.gob.pe/Opendata.beta/Req/Interface/Etapa_Vida/EV_Nino_CRED_Trazador.php">Descargar Reporte<nb-icon icon="download"></nb-icon></a>
+</div>
+
 <div class="table-responsive">
     <table id="tabla-his" class="table table-bordered table-hover" style="font-size: 10px;">
         <thead>
@@ -9,7 +13,7 @@
                     </th>
                 </ng-container>
                 <ng-template #dataCol>
-                    <th scope="col" colspan="2">
+                    <th scope="col" colspan="3">
                         {{header}}
                       </th>
                 </ng-template> 
@@ -29,21 +33,18 @@
                     <ng-container *ngFor="let item of $any(data) | keyvalue: originalOrder; let i = index ">
                         <ng-container *ngIf="!dataTable?.indexDisable?.includes(i)">
                             <ng-container *ngIf="dataTable.rowBold==i; else data">
-                                <th scope="row" style="text-align: start;">&nbsp;&nbsp;&nbsp;&nbsp;{{item.value}}</th>
+                                <th scope="row" style="text-align: start;">{{item.value}}</th>
                             </ng-container>
                             <ng-template #data>
-                                <!---<ng-container *ngIf="isPorcentaje(item.value); else numero">
+                                <ng-container *ngIf="checkArray(item.value); else noArray">
+                                    <td style="text-align: center;">
+                                        {{item.value[0]}}</td>
+                                </ng-container>
+                                <ng-template #noArray>
                                     <td style="text-align: center;"
-                                        [ngClass]="{'green': isColor(item.value) === 'green', 'yellow' : isColor(item.value) === 'yellow','red' : isColor(item.value) === 'red' }"
-                                    >{{item.value}}</td>
-                                </ng-container>--->
-                                <!---<ng-template #numero>
-                                    <td style="text-align: center;">{{item.value}}</td>
-                                </ng-template>--->
-                                <td style="text-align: center; font-size: bold"
-                                    [ngClass]="{'green': isColor(item.value[0]) === 'green', 'yellow' : isColor(item.value[0]) === 'yellow','red' : isColor(item.value[0]) === 'red' }"
-                                    [nbTooltip]="item.value[1].toString()"  status="basic"
-                                >{{item.value[0]}}</td>
+                                    [ngClass]="{'green': isColor(item.value) === 'green', 'yellow' : isColor(item.value) === 'yellow','red' : isColor(item.value) === 'red' }">
+                                    {{item.value}}</td>
+                                </ng-template>
                             </ng-template>
                         </ng-container>
                     </ng-container>
@@ -55,4 +56,3 @@
 </div>
 
 <app-leyenda-table *ngIf="dataTable.meta" [metaIndicador]="dataTable.meta" ></app-leyenda-table>
-

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HIS, IResponseIndicador } from '../models/IDatatable.interface';
-import { IFiltroIndicador, IFiltroIndicadorRed } from '../models/IFiltroSelect.interface';
+import { IFiltroIndicador, IFiltroIndicadorMes } from '../models/IFiltroSelect.interface';
 import { IResponseIndicadorNombre, INombreInterface, ICodigoIndicador } from '../models/IIndicador.inteface';
 import { IResponseIndicadorMeta } from '../models/IMeta.interface';
 import { EndpointService } from './endpoint.service';
@@ -18,12 +18,12 @@ export class DataService {
     return this._httpClient.post<IResponseIndicador>(`${this._endPointService.INDICADOR.indicador}`, filtroSelect);
   }
 
-  getInfoRed(filtroSelectRed:IFiltroIndicadorRed):Observable<IResponseIndicador>{
-    return this._httpClient.post<IResponseIndicador>(`${this._endPointService.FILTRO.filtro}`, filtroSelectRed);
-  }
-
   getInfoMeta(filtroSelect:IFiltroIndicador):Observable<IResponseIndicadorMeta>{
     return this._httpClient.post<IResponseIndicadorMeta>(`${this._endPointService.METAGESTION.meta}`, filtroSelect);
+  }
+
+  getInfoMetaOtros(filtroSelect:IFiltroIndicadorMes):Observable<IResponseIndicadorMeta>{
+    return this._httpClient.post<IResponseIndicadorMeta>(`${this._endPointService.METAOTROS.meta}`, filtroSelect);
   }
 
   getInfoIndicadorNombre(nombreInterface:ICodigoIndicador):Observable<IResponseIndicadorNombre>{
